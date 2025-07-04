@@ -22,16 +22,16 @@ public class Evento {
 	}
 	
 	
-	public void CompraIngresso(int quantidadeIngressos) {
-		if(this.ingressosDisponiveis == 0) {
-			System.out.println("Ingressos esgotados!");
-		}else if(this.ingressosDisponiveis - quantidadeIngressos <= 0){
-			System.out.println("Não há ingressos suficientes disponíveis para a quantidade solicitada.");
-		}
-		else {
-			this.ingressosDisponiveis -= 1;
-		}
-	}
+//	public void CompraIngresso(int quantidadeIngressos) {
+//		if(this.ingressosDisponiveis == 0) {
+//			System.out.println("Ingressos esgotados!");
+//		}else if(this.ingressosDisponiveis - quantidadeIngressos <= 0){
+//			System.out.println("Não há ingressos suficientes disponíveis para a quantidade solicitada.");
+//		}
+//		else {
+//			this.ingressosDisponiveis -= 1;
+//		}
+//	}
 	
 	
 	public Integer getId() {
