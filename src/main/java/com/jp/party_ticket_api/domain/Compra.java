@@ -4,15 +4,21 @@ import java.time.LocalDateTime;
 
 public class Compra {
 	
-	private Integer id;
+	private Long id;
+	
 	private String nomeComprador;
+	
 	private String email;
+	
 	private int quantidadeIngressos;
+	
 	private LocalDateTime dataCompra;
+	
 	private Evento evento;
 	
 	
-	public Compra(Integer id, String nomeComprador, String email, int quantidadeIngressos, LocalDateTime dataCompra,
+	
+	public Compra(Long id, String nomeComprador, String email, int quantidadeIngressos, LocalDateTime dataCompra,
 			Evento evento) {
 		this.id = id;
 		this.nomeComprador = nomeComprador;
@@ -23,12 +29,12 @@ public class Compra {
 	}
 
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

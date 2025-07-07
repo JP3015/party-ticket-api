@@ -17,17 +17,22 @@ public class EventoDTO {
 	@NotBlank(message = "O local do evento é obrigatório.")
 	private String local;
 	
-	@Min(value = 1, message = "A capacidade deve ser maior que zero.")
+	@Min(value = 1, message = "A quantidade de ingressos deve ser maior que zero.")
 	private int quantidadeIngressos;
 	
+	@Min(value = 1, message = "A capacidade deve ser maior que zero.")
+	private int capacidade;
 	
-	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int quantidadeIngressos) {
+	
+	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int quantidadeIngressos, int capacidade) {
+		super();
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;
 		this.quantidadeIngressos = quantidadeIngressos;
+		this.capacidade = capacidade;
 	}
-	
+
 	public String getNomeEvento() {
 		return nomeEvento;
 	}
@@ -52,5 +57,15 @@ public class EventoDTO {
 	public void setQuantidadeIngressos(int quantidadeIngressos) {
 		this.quantidadeIngressos = quantidadeIngressos;
 	}
+
+	public int getCapacidade() {
+		return capacidade;
+	}
+
+	public void setCapacidade(int capacidade) {
+		this.capacidade = capacidade;
+	}
+	
+	
 	
 }

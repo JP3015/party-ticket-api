@@ -4,14 +4,19 @@ import java.time.LocalDateTime;
 
 public class Evento {
 
-	private Integer id;
+	private Long id;
+	
 	private String nomeEvento;
+	
 	private LocalDateTime data;
+	
 	private String local;
+	
 	private int capacidade;
+	
 	private int ingressosDisponiveis;
 	
-	public Evento(Integer id, String nomeEvento, LocalDateTime data, String local, int capacidade,
+	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade,
 			int ingressosDisponiveis) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
@@ -34,10 +39,10 @@ public class Evento {
 //	}
 	
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getNomeEvento() {

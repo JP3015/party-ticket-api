@@ -1,5 +1,7 @@
 package com.jp.party_ticket_api.dto;
 
+import java.time.LocalDateTime;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -18,15 +20,17 @@ public class CompraDTO {
 	@Min(value = 1, message = "A capacidade deve ser maior que zero.")
 	private int quantidadeIngresso;
 	
+	@NotNull(message = "A data da compra é obrigatória.")
+	private LocalDateTime dataCompra;
 	
-	public CompraDTO(Long idEvento, String nomeComprador, String email, int quantidadeIngresso) {
+
+	public CompraDTO(Long idEvento,String nomeComprador, String email, int quantidadeIngresso, LocalDateTime dataCompra) {
 		this.idEvento = idEvento;
 		this.nomeComprador = nomeComprador;
 		this.email = email;
 		this.quantidadeIngresso = quantidadeIngresso;
+		this.dataCompra = dataCompra;
 	}
-	
-	
 	public Long getIdEvento() {
 		return idEvento;
 	}
@@ -51,4 +55,15 @@ public class CompraDTO {
 	public void setQuantidadeIngresso(int quantidadeIngresso) {
 		this.quantidadeIngresso = quantidadeIngresso;
 	}
+
+	public LocalDateTime getDataCompra() {
+		return dataCompra;
+	}
+
+
+	public void setDataCompra(LocalDateTime dataCompra) {
+		this.dataCompra = dataCompra;
+	}
+	
+	
 }
