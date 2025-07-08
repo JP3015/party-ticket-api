@@ -2,18 +2,31 @@ package com.jp.party_ticket_api.domain;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "TB_COMPRA")
 public class Compra {
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_COMPRA")
 	private Long id;
 	
+	@Column(name = "NOME_COMPRADOR", nullable = false, length = 100)
 	private String nomeComprador;
 	
+	@Column(name = "EMAIL", nullable = false, length = 100)
 	private String email;
 	
+	@Column(name = "QUANTIDADE_INGRESSOS", nullable = false)
 	private int quantidadeIngressos;
 	
+	@Column(name = "DT_COMPRA", nullable = false)
 	private LocalDateTime dataCompra;
 	
+	@ManyToOne
+    @JoinColumn(name = "ID_EVENTO")
 	private Evento evento;
 	
 	

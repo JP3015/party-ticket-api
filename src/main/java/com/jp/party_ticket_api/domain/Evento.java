@@ -1,19 +1,30 @@
 package com.jp.party_ticket_api.domain;
 
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "TB_EVENTO")
 public class Evento {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_EVENTO")
 	private Long id;
 	
+	@Column(name = "NOME_EVENTO", nullable = false, length = 100)
 	private String nomeEvento;
 	
+	@Column(name = "DATA", nullable = false)
 	private LocalDateTime data;
 	
+	@Column(name = "LOCAL", nullable = false, length = 100)
 	private String local;
 	
+	@Column(name = "CAPACIDADE", nullable = false)
 	private int capacidade;
 	
+	@Column(name = "QUANTIDADE_INGRESSOS_DISPONIVEIS", nullable = false)
 	private int ingressosDisponiveis;
 	
 	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade,
@@ -25,18 +36,6 @@ public class Evento {
 		this.capacidade = capacidade;
 		this.ingressosDisponiveis = ingressosDisponiveis;
 	}
-	
-	
-//	public void CompraIngresso(int quantidadeIngressos) {
-//		if(this.ingressosDisponiveis == 0) {
-//			System.out.println("Ingressos esgotados!");
-//		}else if(this.ingressosDisponiveis - quantidadeIngressos <= 0){
-//			System.out.println("Não há ingressos suficientes disponíveis para a quantidade solicitada.");
-//		}
-//		else {
-//			this.ingressosDisponiveis -= 1;
-//		}
-//	}
 	
 	
 	public Long getId() {
