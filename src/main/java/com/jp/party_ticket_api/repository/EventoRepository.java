@@ -15,10 +15,24 @@ import com.jp.party_ticket_api.dto.EventoDTO;
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 	
-	@Query(value = "SELECT e FROM EventoDTO e WHERE e.nomeEvento = :nome")
-    List<EventoDTO> findByNomeEventoContainingIgnoreCase(@Param("nome") String nome);
+	@Query(value = "SELECT new com.jp.party_ticket_api.dto.EventoDTO(\n"
+			+ "e.nomeEvento,\n"
+			+ "e.data,\n"
+			+ "e.local,\n"
+			+ "e.capacidade,\n"
+			+ "e.ingressosDisponiveis\n"
+			+ ")\n"
+			+ "FROM Evento e WHERE e.nomeEvento = :nome")
+    List<EventoDTO> findByNomeEvento(@Param("nome") String nome);
 
-    @Query(value = "SELECT e FROM EventoDTO e WHERE DATE(e.data) = :data")
+	@Query(value = "SELECT new com.jp.party_ticket_api.dto.EventoDTO(\n"
+			+ "e.nomeEvento,\n"
+			+ "e.data,\n"
+			+ "e.local,\n"
+			+ "e.capacidade,\n"
+			+ "e.ingressosDisponiveis\n"
+			+ ")\n"
+			+ "FROM Evento e WHERE DATE(e.data) = :data")
     List<EventoDTO> findByData(@Param("data") LocalDate data);
     
     
@@ -28,12 +42,12 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
     		@Param("ingressosDisponiveis") int ingressosDisponiveis);
     
     
-    @Query(value = "UPDATE Evento e SET "
-    		+ "e.nomeEvento = :nomeEvento,"
-    		+ "e.data = :data,"
-    		+ "e.local = :local"
-    		+ "e.capacidade = :capacidade,"
-    		+ "e.ingressosDisponiveis = :ingressosDisponiveis"
+    @Query(value = "UPDATE Evento e SET \n"
+    		+ "e.nomeEvento = :nomeEvento,\n"
+    		+ "e.data = :data,\n"
+    		+ "e.local = :local,\n"
+    		+ "e.capacidade = :capacidade,\n"
+    		+ "e.ingressosDisponiveis = :ingressosDisponiveis\n"
     		+ "WHERE e.id = :id")
     void updateEvento(
     		@Param("id") Long id, 

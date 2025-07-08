@@ -25,7 +25,6 @@ public class EventoDTO {
 	
 	
 	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int quantidadeIngressos, int capacidade) {
-		super();
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;

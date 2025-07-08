@@ -8,9 +8,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class CompraDTO {
 	
-	@NotNull(message = "O ID do evento é obrigatório.")
-	private Long idEvento; 
-	
 	@NotBlank(message = "O nome do comprador é obrigatório.")
 	private String nomeComprador;
 	
@@ -24,19 +21,14 @@ public class CompraDTO {
 	private LocalDateTime dataCompra;
 	
 
-	public CompraDTO(Long idEvento,String nomeComprador, String email, int quantidadeIngresso, LocalDateTime dataCompra) {
-		this.idEvento = idEvento;
+	public CompraDTO(String nomeComprador, String email, int quantidadeIngresso, LocalDateTime dataCompra) {
 		this.nomeComprador = nomeComprador;
 		this.email = email;
 		this.quantidadeIngresso = quantidadeIngresso;
 		this.dataCompra = dataCompra;
 	}
-	public Long getIdEvento() {
-		return idEvento;
-	}
-	public void setIdEvento(Long idEvento) {
-		this.idEvento = idEvento;
-	}
+	
+	
 	public String getNomeComprador() {
 		return nomeComprador;
 	}
