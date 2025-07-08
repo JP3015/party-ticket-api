@@ -1,15 +1,21 @@
 package com.jp.party_ticket_api.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Evento;
 import com.jp.party_ticket_api.dto.EventoDTO;
 import com.jp.party_ticket_api.repository.EventoRepository;
 import com.jp.party_ticket_api.service.interfaces.IEventoService;
 
+@Service
 public class EventoServiceImpl implements IEventoService{
 	
+	@Autowired
 	private EventoRepository eventoRepository;
 	
 	public EventoServiceImpl(EventoRepository eventoRepository) {
@@ -18,12 +24,12 @@ public class EventoServiceImpl implements IEventoService{
 
 	@Override
 	public List<EventoDTO> buscarNomeEvento(String nome) {
-		return eventoRepository.findByNomeEventoContainingIgnoreCase(nome);
+		return eventoRepository.findByNomeEvento(nome);
 	}
 
 	@Override
-	public List<EventoDTO> buscarData(LocalDateTime data) {
-		return eventoRepository.findByData(data.toLocalDate());
+	public List<EventoDTO> buscarData(LocalDate data) {
+		return eventoRepository.findByData(data);
 	}
 
 	@Override

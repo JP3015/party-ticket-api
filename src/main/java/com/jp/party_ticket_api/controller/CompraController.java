@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class CompraController {
     }
 	
 	@GetMapping("/data/{data}")
-    public ResponseEntity<List<CompraDTO>> buscarDataCompra(@PathVariable LocalDateTime data) {
+    public ResponseEntity<List<CompraDTO>> buscarDataCompra(@PathVariable LocalDate data) {
         
     	List<CompraDTO> dto = compraService.buscarDataCompra(data);
         return ResponseEntity.ok(dto);

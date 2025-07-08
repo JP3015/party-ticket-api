@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -41,12 +42,12 @@ public class EventoController {
         return ResponseEntity.noContent().build(); 
     }
     
-    @PutMapping("/{id}/ingressos")
+    @PutMapping("/{id}/ingressos/{quantidadeIngressos}")
     public ResponseEntity<Void> atualizarEventoIngressosDisponiveis(
             @PathVariable Long id,
-            @RequestBody EventoDTO evento) {
+            @PathVariable int quantidadeIngressos) {
 
-        eventoService.atualizarEventoIngressosDisponiveis(id, evento.getQuantidadeIngressos());
+        eventoService.atualizarEventoIngressosDisponiveis(id, quantidadeIngressos);
         return ResponseEntity.noContent().build(); 
     }
     
@@ -65,7 +66,7 @@ public class EventoController {
     }
     
     @GetMapping("/data/{data}")
-    public ResponseEntity<List<EventoDTO>> buscarDataEvento(@PathVariable LocalDateTime data) {
+    public ResponseEntity<List<EventoDTO>> buscarDataEvento(@PathVariable LocalDate data) {
         
     	List<EventoDTO> dto = eventoService.buscarData(data);
         return ResponseEntity.ok(dto);

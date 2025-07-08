@@ -1,15 +1,21 @@
 package com.jp.party_ticket_api.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Compra;
 import com.jp.party_ticket_api.dto.CompraDTO;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.ICompraService;
 
+@Service
 public class CompraServiceImpl implements ICompraService{
 	
+	@Autowired
 	private CompraRepository compraRepository;
 
 	public CompraServiceImpl(CompraRepository compraRepository) {
@@ -27,8 +33,8 @@ public class CompraServiceImpl implements ICompraService{
 	}
 
 	@Override
-	public List<CompraDTO> buscarDataCompra(LocalDateTime data) {
-		return compraRepository.findByDataCompra(data.toLocalDate());
+	public List<CompraDTO> buscarDataCompra(LocalDate data) {
+		return compraRepository.findByDataCompra(data);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.service.interfaces;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface ICompraService {
 	    
 	List<CompraDTO> buscarEmail(String email);
 	    
-	List<CompraDTO> buscarDataCompra(LocalDateTime data);
+	List<CompraDTO> buscarDataCompra(LocalDate data);
 	
 	void criarCompra(Compra compra);
 

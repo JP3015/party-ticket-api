@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.service.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.jp.party_ticket_api.domain.Evento;
@@ -9,7 +10,7 @@ public interface IEventoService {
 
 	 List<EventoDTO> buscarNomeEvento(String nome);
 
-	 List<EventoDTO> buscarData(java.time.LocalDateTime data);
+	 List<EventoDTO> buscarData(LocalDate data);
 	 
 	 void criarEvento(Evento evento);
 
