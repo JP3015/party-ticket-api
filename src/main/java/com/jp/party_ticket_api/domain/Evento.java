@@ -27,6 +27,8 @@ public class Evento {
 	@Column(name = "QUANTIDADE_INGRESSOS_DISPONIVEIS", nullable = false)
 	private int ingressosDisponiveis;
 	
+	public Evento() {}
+	
 	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade,
 			int ingressosDisponiveis) {
 		this.id = id;

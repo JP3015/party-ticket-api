@@ -29,7 +29,7 @@ public class Compra {
     @JoinColumn(name = "ID_EVENTO")
 	private Evento evento;
 	
-	
+	public Compra() {}
 	
 	public Compra(Long id, String nomeComprador, String email, int quantidadeIngressos, LocalDateTime dataCompra,
 			Evento evento) {
