@@ -8,27 +8,23 @@ import jakarta.validation.constraints.NotNull;
 
 public class CompraDTO {
 	
-	@NotBlank(message = "O nome do comprador é obrigatório.")
 	private String nomeComprador;
-	
-	@NotBlank(message = "O email é obrigatório.")
 	private String email;
-	
-	@Min(value = 1, message = "A capacidade deve ser maior que zero.")
-	private int quantidadeIngresso;
-	
-	@NotNull(message = "A data da compra é obrigatória.")
+	private int quantidadeIngressos;
 	private LocalDateTime dataCompra;
+	private String nomeEvento;
 	
-
-	public CompraDTO(String nomeComprador, String email, int quantidadeIngresso, LocalDateTime dataCompra) {
+	public CompraDTO() {}
+	
+	public CompraDTO(String nomeComprador, String email, int quantidadeIngressos, LocalDateTime dataCompra,
+			String nomeEvento) {
 		this.nomeComprador = nomeComprador;
 		this.email = email;
-		this.quantidadeIngresso = quantidadeIngresso;
+		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
+		this.nomeEvento = nomeEvento;
 	}
-	
-	
+
 	public String getNomeComprador() {
 		return nomeComprador;
 	}
@@ -41,21 +37,27 @@ public class CompraDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getQuantidadeIngresso() {
-		return quantidadeIngresso;
+	public int getQuantidadeIngressos() {
+		return quantidadeIngressos;
 	}
-	public void setQuantidadeIngresso(int quantidadeIngresso) {
-		this.quantidadeIngresso = quantidadeIngresso;
+	public void setQuantidadeIngressos(int quantidadeIngressos) {
+		this.quantidadeIngressos = quantidadeIngressos;
 	}
 
 	public LocalDateTime getDataCompra() {
 		return dataCompra;
 	}
 
-
 	public void setDataCompra(LocalDateTime dataCompra) {
 		this.dataCompra = dataCompra;
 	}
-	
+
+	public String getNomeEvento() {
+		return nomeEvento;
+	}
+
+	public void setNomeEvento(String nomeEvento) {
+		this.nomeEvento = nomeEvento;
+	}
 	
 }

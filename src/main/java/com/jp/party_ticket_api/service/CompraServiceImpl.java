@@ -44,7 +44,7 @@ public class CompraServiceImpl implements ICompraService{
 
 	@Override
 	public void atualizarCompra(Long id, CompraDTO compra) {
-		compraRepository.updateCompra(id, compra.getNomeComprador(), compra.getDataCompra(), compra.getEmail(), compra.getQuantidadeIngresso());
+		compraRepository.updateCompra(id, compra.getNomeComprador(), compra.getDataCompra(), compra.getEmail(), compra.getQuantidadeIngressos());
 	}
 
 	@Override

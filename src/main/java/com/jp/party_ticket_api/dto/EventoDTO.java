@@ -8,27 +8,19 @@ import jakarta.validation.constraints.NotNull;
 
 public class EventoDTO {
 	
-	@NotBlank(message = "O nome do evento é obrigatório.")
 	private String nomeEvento;
-	
-	@NotNull(message = "A data do evento é obrigatória.")
 	private LocalDateTime data;
-	
-	@NotBlank(message = "O local do evento é obrigatório.")
 	private String local;
-	
-	@Min(value = 1, message = "A quantidade de ingressos deve ser maior que zero.")
-	private int quantidadeIngressos;
-	
-	@Min(value = 1, message = "A capacidade deve ser maior que zero.")
+	private int ingressosDisponiveis;
 	private int capacidade;
 	
+	public EventoDTO() {}
 	
-	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int quantidadeIngressos, int capacidade) {
+	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis, int capacidade) {
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;
-		this.quantidadeIngressos = quantidadeIngressos;
+		this.ingressosDisponiveis = ingressosDisponiveis;
 		this.capacidade = capacidade;
 	}
 
@@ -51,10 +43,10 @@ public class EventoDTO {
 		this.local = local;
 	}
 	public int getQuantidadeIngressos() {
-		return quantidadeIngressos;
+		return ingressosDisponiveis;
 	}
-	public void setQuantidadeIngressos(int quantidadeIngressos) {
-		this.quantidadeIngressos = quantidadeIngressos;
+	public void setQuantidadeIngressos(int ingressosDisponiveis) {
+		this.ingressosDisponiveis = ingressosDisponiveis;
 	}
 
 	public int getCapacidade() {
@@ -64,7 +56,5 @@ public class EventoDTO {
 	public void setCapacidade(int capacidade) {
 		this.capacidade = capacidade;
 	}
-	
-	
 	
 }

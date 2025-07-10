@@ -5,12 +5,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.jp.party_ticket_api.domain.Evento;
 import com.jp.party_ticket_api.dto.EventoDTO;
+
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface EventoRepository extends JpaRepository<Evento, Long> {
@@ -19,8 +22,8 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
 			+ "e.nomeEvento,\n"
 			+ "e.data,\n"
 			+ "e.local,\n"
-			+ "e.capacidade,\n"
-			+ "e.ingressosDisponiveis\n"
+			+ "e.ingressosDisponiveis,\n"
+			+ "e.capacidade\n"
 			+ ")\n"
 			+ "FROM Evento e WHERE e.nomeEvento = :nome")
     List<EventoDTO> findByNomeEvento(@Param("nome") String nome);
@@ -29,19 +32,22 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
 			+ "e.nomeEvento,\n"
 			+ "e.data,\n"
 			+ "e.local,\n"
-			+ "e.capacidade,\n"
-			+ "e.ingressosDisponiveis\n"
+			+ "e.ingressosDisponiveis,\n"
+			+ "e.capacidade\n"
 			+ ")\n"
 			+ "FROM Evento e WHERE DATE(e.data) = :data")
     List<EventoDTO> findByData(@Param("data") LocalDate data);
     
-    
-    @Query(value = "UPDATE Evento e SET e.ingressosDisponiveis = :ingressosDisponiveis WHERE DATE(e.data) = :data")
+	
+	@Modifying
+	@Transactional
+    @Query(value = "UPDATE Evento e SET e.ingressosDisponiveis = :ingressosDisponiveis WHERE e.id = :id")
     void updateEventoIngressosDisponiveis(
     		@Param("id") Long id,
     		@Param("ingressosDisponiveis") int ingressosDisponiveis);
     
-    
+	@Modifying
+	@Transactional
     @Query(value = "UPDATE Evento e SET \n"
     		+ "e.nomeEvento = :nomeEvento,\n"
     		+ "e.data = :data,\n"
