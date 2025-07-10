@@ -72,6 +72,12 @@ public class EventoController {
         return ResponseEntity.ok(dto);
     }
     
+    @GetMapping("/id/{id}")
+    public ResponseEntity<EventoDTO> buscarId(@PathVariable Long id) {
+        
+    	EventoDTO dto = eventoService.buscarId(id);
+        return ResponseEntity.ok(dto);
+    }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarEvento(

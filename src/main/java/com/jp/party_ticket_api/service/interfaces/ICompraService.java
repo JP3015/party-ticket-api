@@ -15,10 +15,11 @@ public interface ICompraService {
 	    
 	List<CompraDTO> buscarDataCompra(LocalDate data);
 	
+	CompraDTO buscarId(Long id);
+	
 	void criarCompra(Compra compra);
 
 	void atualizarCompra(Long id, CompraDTO compra);
 
 	void deletarCompra(Long id);
-
 }

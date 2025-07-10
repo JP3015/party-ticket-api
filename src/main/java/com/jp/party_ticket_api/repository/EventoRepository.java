@@ -37,6 +37,17 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
 			+ ")\n"
 			+ "FROM Evento e WHERE DATE(e.data) = :data")
     List<EventoDTO> findByData(@Param("data") LocalDate data);
+	
+	
+	@Query(value = "SELECT new com.jp.party_ticket_api.dto.EventoDTO(\n"
+			+ "e.nomeEvento,\n"
+			+ "e.data,\n"
+			+ "e.local,\n"
+			+ "e.ingressosDisponiveis,\n"
+			+ "e.capacidade\n"
+			+ ")\n"
+			+ "FROM Evento e WHERE e.id = :id")
+    EventoDTO findByIdEvento(@Param("id") Long id);
     
 	
 	@Modifying

@@ -11,6 +11,7 @@ import com.jp.party_ticket_api.domain.Compra;
 import com.jp.party_ticket_api.dto.CompraDTO;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.ICompraService;
+import com.jp.party_ticket_api.service.interfaces.IEventoService;
 
 @Service
 public class CompraServiceImpl implements ICompraService{
@@ -35,6 +36,11 @@ public class CompraServiceImpl implements ICompraService{
 	@Override
 	public List<CompraDTO> buscarDataCompra(LocalDate data) {
 		return compraRepository.findByDataCompra(data);
+	}
+	
+	@Override
+	public CompraDTO buscarId(Long id) {
+		return compraRepository.findByIdCompra(id);
 	}
 
 	@Override

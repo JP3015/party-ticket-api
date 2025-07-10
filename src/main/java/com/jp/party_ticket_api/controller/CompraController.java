@@ -1,7 +1,6 @@
 package com.jp.party_ticket_api.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -66,6 +65,13 @@ public class CompraController {
     public ResponseEntity<List<CompraDTO>> buscarDataCompra(@PathVariable LocalDate data) {
         
     	List<CompraDTO> dto = compraService.buscarDataCompra(data);
+        return ResponseEntity.ok(dto);
+    }
+	
+	@GetMapping("/id/{id}")
+    public ResponseEntity<CompraDTO> buscarId(@PathVariable Long id) {
+        
+    	CompraDTO dto = compraService.buscarId(id);
         return ResponseEntity.ok(dto);
     }
 

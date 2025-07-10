@@ -12,6 +12,8 @@ public interface IEventoService {
 
 	 List<EventoDTO> buscarData(LocalDate data);
 	 
+	 EventoDTO buscarId(Long id);
+	 
 	 void criarEvento(Evento evento);
 
 	 void atualizarEvento(Long id, EventoDTO evento);
