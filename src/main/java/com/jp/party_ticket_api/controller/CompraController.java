@@ -33,12 +33,12 @@ public class CompraController {
 	
 	
 	@PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarCompra(
+    public ResponseEntity<String> atualizarCompra(
             @PathVariable Long id,
             @RequestBody CompraDTO compra) {
 
 		compraService.atualizarCompra(id, compra);
-        return ResponseEntity.noContent().build(); 
+		return ResponseEntity.ok("Compra atualizada com sucesso.");
     }
 	
 	@PostMapping
@@ -70,11 +70,11 @@ public class CompraController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarCompra(
+    public ResponseEntity<String> deletarCompra(
             @PathVariable Long id) {
 
     	compraService.deletarCompra(id);
-        return ResponseEntity.noContent().build(); 
+    	return ResponseEntity.ok("Compra deletada com sucesso.");
     }
 	
 }

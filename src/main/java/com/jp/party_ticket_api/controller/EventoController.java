@@ -34,21 +34,21 @@ public class EventoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> atualizarEvento(
+    public ResponseEntity<String> atualizarEvento(
             @PathVariable Long id,
             @RequestBody EventoDTO evento) {
 
         eventoService.atualizarEvento(id, evento);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.ok("Evento atualizado com sucesso.");
     }
     
     @PutMapping("/{id}/ingressos/{quantidadeIngressos}")
-    public ResponseEntity<Void> atualizarEventoIngressosDisponiveis(
+    public ResponseEntity<String> atualizarEventoIngressosDisponiveis(
             @PathVariable Long id,
             @PathVariable int quantidadeIngressos) {
 
         eventoService.atualizarEventoIngressosDisponiveis(id, quantidadeIngressos);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.ok("Ingressos atualizados com sucesso.");
     }
     
     @PostMapping
@@ -74,11 +74,11 @@ public class EventoController {
     
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarEvento(
+    public ResponseEntity<String> deletarEvento(
             @PathVariable Long id) {
 
         eventoService.deletarEvento(id);
-        return ResponseEntity.noContent().build(); 
+        return ResponseEntity.ok("Evento deletado com sucesso.");
     }
 
 }
