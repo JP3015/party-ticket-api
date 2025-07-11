@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.domain;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
@@ -27,19 +28,27 @@ public class Evento {
 	@Column(name = "QUANTIDADE_INGRESSOS_DISPONIVEIS", nullable = false)
 	private int ingressosDisponiveis;
 	
-	public Evento() {}
+	@Column(name = "VALOR_INVESTIDO", nullable = false)
+	private BigDecimal valorInvestido;
+
+	@Column(name = "RECEITA_ESTIMADA", nullable = false)
+	private BigDecimal receitaEstimada;
+
 	
+	public Evento() {}
+
 	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade,
-			int ingressosDisponiveis) {
+			int ingressosDisponiveis, BigDecimal valorInvestido, BigDecimal receitaEstimada) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;
 		this.capacidade = capacidade;
 		this.ingressosDisponiveis = ingressosDisponiveis;
+		this.valorInvestido = valorInvestido;
+		this.receitaEstimada = receitaEstimada;
 	}
-	
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -76,7 +85,21 @@ public class Evento {
 	public void setIngressosDisponiveis(int ingressosDisponiveis) {
 		this.ingressosDisponiveis = ingressosDisponiveis;
 	}
-	
-	
+
+	public BigDecimal getValorInvestido() {
+		return valorInvestido;
+	}
+
+	public void setValorInvestido(BigDecimal valorInvestido) {
+		this.valorInvestido = valorInvestido;
+	}
+
+	public BigDecimal getReceitaEstimada() {
+		return receitaEstimada;
+	}
+
+	public void setReceitaEstimada(BigDecimal receitaEstimada) {
+		this.receitaEstimada = receitaEstimada;
+	}
 
 }

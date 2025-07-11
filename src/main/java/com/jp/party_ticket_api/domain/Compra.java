@@ -19,6 +19,12 @@ public class Compra {
 	@Column(name = "EMAIL", nullable = false, length = 100)
 	private String email;
 	
+	@Column(name = "CPF", nullable = false, length = 11)
+	private String cpf;
+	
+	@Column(name = "RG", nullable = false, length = 9)
+	private String rg;
+	
 	@Column(name = "QUANTIDADE_INGRESSOS", nullable = false)
 	private int quantidadeIngressos;
 	
@@ -30,17 +36,18 @@ public class Compra {
 	private Evento evento;
 	
 	public Compra() {}
-	
-	public Compra(Long id, String nomeComprador, String email, int quantidadeIngressos, LocalDateTime dataCompra,
-			Evento evento) {
+
+	public Compra(Long id, String nomeComprador, String email, String cpf, String rg, int quantidadeIngressos,
+			LocalDateTime dataCompra, Evento evento) {
 		this.id = id;
 		this.nomeComprador = nomeComprador;
 		this.email = email;
+		this.cpf = cpf;
+		this.rg = rg;
 		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
 		this.evento = evento;
 	}
-
 
 	public Long getId() {
 		return id;
@@ -100,6 +107,21 @@ public class Compra {
 	public void setEvento(Evento evento) {
 		this.evento = evento;
 	}
-	
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
 
 }
