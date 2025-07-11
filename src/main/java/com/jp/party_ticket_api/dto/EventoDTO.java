@@ -2,12 +2,13 @@ package com.jp.party_ticket_api.dto;
 
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.jp.party_ticket_api.domain.Evento;
+
 
 public class EventoDTO {
 	
+	
+	private Long id;
 	private String nomeEvento;
 	private LocalDateTime data;
 	private String local;
@@ -16,12 +17,41 @@ public class EventoDTO {
 	
 	public EventoDTO() {}
 	
-	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis, int capacidade) {
+	public EventoDTO(Evento evento) {
+		this.id = evento.getId();
+	    this.nomeEvento = evento.getNomeEvento();
+	    this.data = evento.getData();
+	    this.local = evento.getLocal();
+	    this.ingressosDisponiveis = evento.getIngressosDisponiveis();
+	    this.capacidade = evento.getCapacidade();
+	}
+	
+	public EventoDTO(Long id, String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
+			int capacidade) {
+		this.id = id;
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;
 		this.ingressosDisponiveis = ingressosDisponiveis;
 		this.capacidade = capacidade;
+	}
+	
+	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
+			int capacidade) {
+		this.nomeEvento = nomeEvento;
+		this.data = data;
+		this.local = local;
+		this.ingressosDisponiveis = ingressosDisponiveis;
+		this.capacidade = capacidade;
+	}
+
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNomeEvento() {

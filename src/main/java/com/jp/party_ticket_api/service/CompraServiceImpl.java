@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Compra;
 import com.jp.party_ticket_api.dto.CompraDTO;
+import com.jp.party_ticket_api.dto.EventoDTO;
+import com.jp.party_ticket_api.exception.IngressosIndisponiveisException;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.ICompraService;
 import com.jp.party_ticket_api.service.interfaces.IEventoService;
@@ -18,9 +20,12 @@ public class CompraServiceImpl implements ICompraService{
 	
 	@Autowired
 	private CompraRepository compraRepository;
+	
+	private IEventoService eventoService;
 
-	public CompraServiceImpl(CompraRepository compraRepository) {
+	public CompraServiceImpl(CompraRepository compraRepository, IEventoService eventoService) {
 		this.compraRepository = compraRepository;
+		this.eventoService = eventoService;
 	}
 
 	@Override
@@ -45,16 +50,38 @@ public class CompraServiceImpl implements ICompraService{
 
 	@Override
 	public void criarCompra(Compra compra) {
+		EventoDTO evento = eventoService.buscarId(compra.getEvento().getId());
+		
+		if(evento.getQuantidadeIngressos() < compra.getQuantidadeIngressos()) {
+			throw new IngressosIndisponiveisException(evento.getNomeEvento());
+		}
+		
+		eventoService.atualizarEventoIngressosDisponiveis(evento.getId(), evento.getQuantidadeIngressos() - compra.getQuantidadeIngressos());
 		compraRepository.save(compra);
 	}
 
 	@Override
 	public void atualizarCompra(Long id, CompraDTO compra) {
-		compraRepository.updateCompra(id, compra.getNomeComprador(), compra.getDataCompra(), compra.getEmail(), compra.getQuantidadeIngressos());
+	    CompraDTO dto = buscarId(id);
+	    
+	    int ingressosAntigos = dto.getQuantidadeIngressos();
+	    int ingressosNovos = compra.getQuantidadeIngressos();
+	    int delta = ingressosNovos - ingressosAntigos;
+
+	    if (delta > 0 && dto.getEvento().getQuantidadeIngressos() < delta) {
+	        throw new IngressosIndisponiveisException(dto.getEvento().getNomeEvento());
+	    }
+
+	    eventoService.atualizarEventoIngressosDisponiveis(dto.getEvento().getId(), dto.getEvento().getQuantidadeIngressos() - delta );
+	    compraRepository.updateCompra(id, compra.getNomeComprador(), compra.getDataCompra(), compra.getEmail(), compra.getQuantidadeIngressos());
 	}
+
 
 	@Override
 	public void deletarCompra(Long id) {
+		CompraDTO dto = buscarId(id);
+		
+		eventoService.atualizarEventoIngressosDisponiveis(dto.getEvento().getId(), dto.getEvento().getQuantidadeIngressos() + dto.getQuantidadeIngressos());
 		compraRepository.deleteById(id);
 	}
 

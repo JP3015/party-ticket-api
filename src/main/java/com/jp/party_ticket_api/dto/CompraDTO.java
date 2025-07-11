@@ -2,27 +2,51 @@ package com.jp.party_ticket_api.dto;
 
 import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.jp.party_ticket_api.domain.Evento;
 
 public class CompraDTO {
 	
+	private Long idComprador;
 	private String nomeComprador;
 	private String email;
 	private int quantidadeIngressos;
 	private LocalDateTime dataCompra;
-	private String nomeEvento;
+	private EventoDTO evento;
 	
 	public CompraDTO() {}
 	
-	public CompraDTO(String nomeComprador, String email, int quantidadeIngressos, LocalDateTime dataCompra,
-			String nomeEvento) {
+	public CompraDTO(Long idComprador, String nomeComprador, String email, int quantidadeIngressos,
+			LocalDateTime dataCompra, Evento evento) {
+		this.idComprador = idComprador;
 		this.nomeComprador = nomeComprador;
 		this.email = email;
 		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
-		this.nomeEvento = nomeEvento;
+		this.evento = new EventoDTO(evento);
+	}
+
+	public CompraDTO(String nomeComprador, String email, int quantidadeIngressos,
+			LocalDateTime dataCompra) {
+		this.nomeComprador = nomeComprador;
+		this.email = email;
+		this.quantidadeIngressos = quantidadeIngressos;
+		this.dataCompra = dataCompra;
+	}
+
+	public Long getIdComprador() {
+		return idComprador;
+	}
+
+	public void setIdComprador(Long idComprador) {
+		this.idComprador = idComprador;
+	}
+	
+	public EventoDTO getEvento() {
+		return evento;
+	}
+
+	public void setEvento(EventoDTO evento) {
+		this.evento = evento;
 	}
 
 	public String getNomeComprador() {
@@ -50,14 +74,6 @@ public class CompraDTO {
 
 	public void setDataCompra(LocalDateTime dataCompra) {
 		this.dataCompra = dataCompra;
-	}
-
-	public String getNomeEvento() {
-		return nomeEvento;
-	}
-
-	public void setNomeEvento(String nomeEvento) {
-		this.nomeEvento = nomeEvento;
 	}
 	
 }

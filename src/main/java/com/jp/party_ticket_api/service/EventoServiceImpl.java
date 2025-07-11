@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Evento;
 import com.jp.party_ticket_api.dto.EventoDTO;
+import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
 import com.jp.party_ticket_api.repository.EventoRepository;
 import com.jp.party_ticket_api.service.interfaces.IEventoService;
 
@@ -39,17 +40,32 @@ public class EventoServiceImpl implements IEventoService{
 
 	@Override
 	public void criarEvento(Evento evento) {
+		if(evento.getCapacidade() < evento.getIngressosDisponiveis()) {
+			throw new ExcedeuCapacidadeException();
+		}
+		
 		eventoRepository.save(evento);
 	}
 
 	@Override
 	public void atualizarEvento(Long id, EventoDTO evento) {
+		if(evento.getCapacidade() < evento.getQuantidadeIngressos()) {
+			throw new ExcedeuCapacidadeException();
+		}
+		
 		eventoRepository.updateEvento(id, evento.getNomeEvento(), evento.getData(), evento.getLocal(), evento.getCapacidade(), evento.getQuantidadeIngressos());
 	}
 
 	@Override
 	public void atualizarEventoIngressosDisponiveis(Long id, int ingressosDisponiveis) {
+		EventoDTO evento = buscarId(id);
+		
+		if(evento.getCapacidade() < ingressosDisponiveis) {
+			throw new ExcedeuCapacidadeException();
+		}
+		
 		eventoRepository.updateEventoIngressosDisponiveis(id, ingressosDisponiveis);
+		
 	}
 	
 	@Override

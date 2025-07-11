@@ -19,6 +19,7 @@ import jakarta.transaction.Transactional;
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.EventoDTO(\n"
+			+ "e.id,\n"
 			+ "e.nomeEvento,\n"
 			+ "e.data,\n"
 			+ "e.local,\n"
@@ -29,6 +30,7 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
     List<EventoDTO> findByNomeEvento(@Param("nome") String nome);
 
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.EventoDTO(\n"
+			+ "e.id,\n"
 			+ "e.nomeEvento,\n"
 			+ "e.data,\n"
 			+ "e.local,\n"
@@ -40,6 +42,7 @@ public interface EventoRepository extends JpaRepository<Evento, Long> {
 	
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.EventoDTO(\n"
+			+ "e.id,\n"
 			+ "e.nomeEvento,\n"
 			+ "e.data,\n"
 			+ "e.local,\n"

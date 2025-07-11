@@ -19,50 +19,50 @@ import jakarta.transaction.Transactional;
 public interface CompraRepository extends JpaRepository<Compra, Long> {
 
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
+			+ "c.id,\n"
 			+ "c.nomeComprador,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "e.nomeEvento\n"
+			+ "c.evento\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
-			+ "JOIN c.evento e\n"
 			+ "WHERE c.nomeComprador = :nome")
     List<CompraDTO> findByNomeComprador(String nome);
     
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
+			+ "c.id,\n"
 			+ "c.nomeComprador,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "e.nomeEvento\n"
+			+ "c.evento\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
-			+ "JOIN c.evento e\n"
 			+ "WHERE c.email = :email")
     List<CompraDTO> findByEmail(String email);
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
+			+ "c.id,\n"
 			+ "c.nomeComprador,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "e.nomeEvento\n"
+			+ "c.evento\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
-			+ "JOIN c.evento e\n"
 			+ "WHERE DATE(c.dataCompra) = :data")
     List<CompraDTO> findByDataCompra(@Param("data") LocalDate data);
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
+			+ "c.id,\n"
 			+ "c.nomeComprador,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "e.nomeEvento\n"
+			+ "c.evento\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
-			+ "JOIN c.evento e\n"
 			+ "WHERE c.id = :id")
     CompraDTO findByIdCompra(@Param("id") Long id);
     
