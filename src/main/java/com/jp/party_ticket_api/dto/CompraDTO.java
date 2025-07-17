@@ -2,58 +2,58 @@ package com.jp.party_ticket_api.dto;
 
 import java.time.LocalDateTime;
 
-import com.jp.party_ticket_api.domain.Evento;
+import com.jp.party_ticket_api.domain.Balada;
 
 public class CompraDTO {
 	
-	private Long idComprador;
-	private String nomeComprador;
+	private Long id;
+	private String nome;
 	private String email;
 	private int quantidadeIngressos;
 	private LocalDateTime dataCompra;
-	private EventoDTO evento;
+	private BaladaDTO balada;
 	
 	public CompraDTO() {}
 	
-	public CompraDTO(Long idComprador, String nomeComprador, String email, int quantidadeIngressos,
-			LocalDateTime dataCompra, Evento evento) {
-		this.idComprador = idComprador;
-		this.nomeComprador = nomeComprador;
+	public CompraDTO(Long id, String nome, String email, int quantidadeIngressos,
+			LocalDateTime dataCompra, Balada balada) {
+		this.id = id;
+		this.nome = nome;
 		this.email = email;
 		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
-		this.evento = new EventoDTO(evento);
+		this.balada = new BaladaDTO(balada);
 	}
 
-	public CompraDTO(String nomeComprador, String email, int quantidadeIngressos,
+	public CompraDTO(String nome, String email, int quantidadeIngressos,
 			LocalDateTime dataCompra) {
-		this.nomeComprador = nomeComprador;
+		this.nome = nome;
 		this.email = email;
 		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
 	}
 
-	public Long getIdComprador() {
-		return idComprador;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdComprador(Long idComprador) {
-		this.idComprador = idComprador;
-	}
-	
-	public EventoDTO getEvento() {
-		return evento;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setEvento(EventoDTO evento) {
-		this.evento = evento;
+	public BaladaDTO getBalada() {
+		return balada;
 	}
 
-	public String getNomeComprador() {
-		return nomeComprador;
+	public void setBalada(BaladaDTO balada) {
+		this.balada = balada;
 	}
-	public void setNomeComprador(String nomeComprador) {
-		this.nomeComprador = nomeComprador;
+
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	public String getEmail() {
 		return email;

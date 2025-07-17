@@ -1,7 +1,6 @@
 package com.jp.party_ticket_api.service.interfaces;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.jp.party_ticket_api.domain.Compra;

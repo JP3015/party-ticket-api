@@ -68,7 +68,7 @@ public class CompraController {
         return ResponseEntity.ok(dto);
     }
 	
-	@GetMapping("/id/{id}")
+	@GetMapping("/{id}")
     public ResponseEntity<CompraDTO> buscarId(@PathVariable Long id) {
         
     	CompraDTO dto = compraService.buscarId(id);

@@ -5,5 +5,8 @@ public class ExcedeuCapacidadeException extends RuntimeException{
 	public ExcedeuCapacidadeException() {
 	    super("A quantidade de ingressos excede a capacidade permitida.");
 	}
-
+	
+	public ExcedeuCapacidadeException(String string) {
+	    super(string);
+	}
 }

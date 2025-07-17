@@ -2,29 +2,17 @@ package com.jp.party_ticket_api.domain;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "TB_COMPRA")
-public class Compra {
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_COMPRA")
-	private Long id;
-	
-	@Column(name = "NOME_COMPRADOR", nullable = false, length = 100)
-	private String nomeComprador;
-	
-	@Column(name = "EMAIL", nullable = false, length = 100)
-	private String email;
-	
-	@Column(name = "CPF", nullable = false, length = 11)
-	private String cpf;
-	
-	@Column(name = "RG", nullable = false, length = 9)
-	private String rg;
-	
+@Table(name = "TB_COMPRA_INGRESSO")
+public class Compra extends PresencaEvento{
+
+
 	@Column(name = "QUANTIDADE_INGRESSOS", nullable = false)
 	private int quantidadeIngressos;
 	
@@ -33,95 +21,39 @@ public class Compra {
 	
 	@ManyToOne
     @JoinColumn(name = "ID_EVENTO")
-	private Evento evento;
+	private Balada balada;
 	
 	public Compra() {}
 
-	public Compra(Long id, String nomeComprador, String email, String cpf, String rg, int quantidadeIngressos,
-			LocalDateTime dataCompra, Evento evento) {
-		this.id = id;
-		this.nomeComprador = nomeComprador;
-		this.email = email;
-		this.cpf = cpf;
-		this.rg = rg;
+	public Compra(int quantidadeIngressos, LocalDateTime dataCompra, Balada balada) {
+		super();
 		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
-		this.evento = evento;
+		this.balada = balada;
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getNomeComprador() {
-		return nomeComprador;
-	}
-
-
-	public void setNomeComprador(String nomeComprador) {
-		this.nomeComprador = nomeComprador;
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 
 	public int getQuantidadeIngressos() {
 		return quantidadeIngressos;
 	}
 
-
 	public void setQuantidadeIngressos(int quantidadeIngressos) {
 		this.quantidadeIngressos = quantidadeIngressos;
 	}
-
 
 	public LocalDateTime getDataCompra() {
 		return dataCompra;
 	}
 
-
 	public void setDataCompra(LocalDateTime dataCompra) {
 		this.dataCompra = dataCompra;
 	}
 
-
-	public Evento getEvento() {
-		return evento;
+	public Balada getBalada() {
+		return balada;
 	}
 
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
+	public void setBalada(Balada balada) {
+		this.balada = balada;
 	}
 
 }

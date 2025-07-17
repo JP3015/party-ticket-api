@@ -2,11 +2,10 @@ package com.jp.party_ticket_api.dto;
 
 import java.time.LocalDateTime;
 
-import com.jp.party_ticket_api.domain.Evento;
+import com.jp.party_ticket_api.domain.Balada;
 
 
-public class EventoDTO {
-	
+public class BaladaDTO {
 	
 	private Long id;
 	private String nomeEvento;
@@ -15,18 +14,18 @@ public class EventoDTO {
 	private int ingressosDisponiveis;
 	private int capacidade;
 	
-	public EventoDTO() {}
+	public BaladaDTO() {}
 	
-	public EventoDTO(Evento evento) {
-		this.id = evento.getId();
-	    this.nomeEvento = evento.getNomeEvento();
-	    this.data = evento.getData();
-	    this.local = evento.getLocal();
-	    this.ingressosDisponiveis = evento.getIngressosDisponiveis();
-	    this.capacidade = evento.getCapacidade();
+	public BaladaDTO(Balada balada) {
+		this.id = balada.getId();
+	    this.nomeEvento = balada.getNomeEvento();
+	    this.data = balada.getData();
+	    this.local = balada.getLocal();
+	    this.ingressosDisponiveis = balada.getIngressosDisponiveis();
+	    this.capacidade = balada.getCapacidade();
 	}
 	
-	public EventoDTO(Long id, String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
+	public BaladaDTO(Long id, String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
 			int capacidade) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
@@ -36,7 +35,7 @@ public class EventoDTO {
 		this.capacidade = capacidade;
 	}
 	
-	public EventoDTO(String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
+	public BaladaDTO(String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
 			int capacidade) {
 		this.nomeEvento = nomeEvento;
 		this.data = data;
@@ -72,10 +71,10 @@ public class EventoDTO {
 	public void setLocal(String local) {
 		this.local = local;
 	}
-	public int getQuantidadeIngressos() {
+	public int getIngressosDisponiveis() {
 		return ingressosDisponiveis;
 	}
-	public void setQuantidadeIngressos(int ingressosDisponiveis) {
+	public void setIngressosDisponiveis(int ingressosDisponiveis) {
 		this.ingressosDisponiveis = ingressosDisponiveis;
 	}
 

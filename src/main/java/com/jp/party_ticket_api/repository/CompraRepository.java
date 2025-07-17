@@ -20,23 +20,23 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
 			+ "c.id,\n"
-			+ "c.nomeComprador,\n"
+			+ "c.nome,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "c.evento\n"
+			+ "c.balada\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
-			+ "WHERE c.nomeComprador = :nome")
+			+ "WHERE c.nome = :nome")
     List<CompraDTO> findByNomeComprador(String nome);
     
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
 			+ "c.id,\n"
-			+ "c.nomeComprador,\n"
+			+ "c.nome,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "c.evento\n"
+			+ "c.balada\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
 			+ "WHERE c.email = :email")
@@ -44,11 +44,11 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
 			+ "c.id,\n"
-			+ "c.nomeComprador,\n"
+			+ "c.nome,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "c.evento\n"
+			+ "c.balada\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
 			+ "WHERE DATE(c.dataCompra) = :data")
@@ -56,11 +56,11 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
 			+ "c.id,\n"
-			+ "c.nomeComprador,\n"
+			+ "c.nome,\n"
 			+ "c.email,\n"
 			+ "c.quantidadeIngressos,\n"
 			+ "c.dataCompra,\n"
-			+ "c.evento\n"
+			+ "c.balada\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
 			+ "WHERE c.id = :id")
@@ -70,7 +70,7 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 	@Modifying
     @Transactional
     @Query(value = "UPDATE Compra c SET\n"
-    		+ "c.nomeComprador = :nomeComprador,\n"
+    		+ "c.nome = :nomeComprador,\n"
     		+ "c.dataCompra = :dataCompra,\n"
     		+ "c.email = :email,\n"
     		+ "c.quantidadeIngressos = :quantidadeIngressos\n"

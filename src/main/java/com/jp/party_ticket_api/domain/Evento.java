@@ -1,52 +1,36 @@
 package com.jp.party_ticket_api.domain;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
-@Entity
-@Table(name = "TB_EVENTO")
-public class Evento {
+@MappedSuperclass
+public abstract class Evento {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_EVENTO")
-	private Long id;
+	protected Long id;
 	
 	@Column(name = "NOME_EVENTO", nullable = false, length = 100)
-	private String nomeEvento;
+	protected String nomeEvento;
 	
 	@Column(name = "DATA", nullable = false)
-	private LocalDateTime data;
+	protected LocalDateTime data;
 	
 	@Column(name = "LOCAL", nullable = false, length = 100)
-	private String local;
+	protected String local;
 	
 	@Column(name = "CAPACIDADE", nullable = false)
-	private int capacidade;
-	
-	@Column(name = "QUANTIDADE_INGRESSOS_DISPONIVEIS", nullable = false)
-	private int ingressosDisponiveis;
-	
-	@Column(name = "VALOR_INVESTIDO", nullable = false)
-	private BigDecimal valorInvestido;
-
-	@Column(name = "RECEITA_ESTIMADA", nullable = false)
-	private BigDecimal receitaEstimada;
-
+	protected int capacidade;
 	
 	public Evento() {}
 
-	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade,
-			int ingressosDisponiveis, BigDecimal valorInvestido, BigDecimal receitaEstimada) {
+	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;
 		this.capacidade = capacidade;
-		this.ingressosDisponiveis = ingressosDisponiveis;
-		this.valorInvestido = valorInvestido;
-		this.receitaEstimada = receitaEstimada;
 	}
 
 	public Long getId() {
@@ -79,27 +63,5 @@ public class Evento {
 	public void setCapacidade(int capacidade) {
 		this.capacidade = capacidade;
 	}
-	public int getIngressosDisponiveis() {
-		return ingressosDisponiveis;
-	}
-	public void setIngressosDisponiveis(int ingressosDisponiveis) {
-		this.ingressosDisponiveis = ingressosDisponiveis;
-	}
-
-	public BigDecimal getValorInvestido() {
-		return valorInvestido;
-	}
-
-	public void setValorInvestido(BigDecimal valorInvestido) {
-		this.valorInvestido = valorInvestido;
-	}
-
-	public BigDecimal getReceitaEstimada() {
-		return receitaEstimada;
-	}
-
-	public void setReceitaEstimada(BigDecimal receitaEstimada) {
-		this.receitaEstimada = receitaEstimada;
-	}
-
+	
 }
