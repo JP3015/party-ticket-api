@@ -31,3 +31,18 @@ build/
 
 ### VS Code ###
 .vscode/
+bin/.gitattributes
+bin/.mvn/wrapper/maven-wrapper.properties
+bin/mvnw
+bin/mvnw.cmd
+bin/pom.xml
+bin/README.md
+bin/src/main/java/com/jp/party_ticket_api/PartyTicketApiApplication.class
+bin/src/main/resources/application.properties
+bin/src/test/java/com/jp/party_ticket_api/PartyTicketApiApplicationTests.class
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
+*.properties
+src/main/resources/application.properties
