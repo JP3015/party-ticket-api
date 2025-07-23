@@ -14,14 +14,16 @@ import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.domain.enums.Role;
 import com.jp.party_ticket_api.dto.LoginDTO;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
+import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
-public class UsuarioServiceImpl implements UserDetailsService{
+public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
 		this.usuarioRepository = usuarioRepository;
@@ -38,7 +40,6 @@ public class UsuarioServiceImpl implements UserDetailsService{
 		usuarioRepository.save(usuario);
 	}
 	
-
 	public void atualizarUsuario(Long id, LoginDTO dto) {
 		usuarioRepository.updateUsuario(id, dto.getNomeUsuario(), dto.getEmail(), passwordEncoder.encode(dto.getSenha()));
 	}
