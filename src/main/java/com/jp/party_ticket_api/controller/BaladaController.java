@@ -51,10 +51,10 @@ public class BaladaController {
     }
     
     @PostMapping
-    public ResponseEntity<Void> criarBalada(@Valid @RequestBody Balada balada) {
+    public ResponseEntity<String> criarBalada(@Valid @RequestBody Balada balada) {
     	
     	baladaService.criarBalada(balada);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+    	return ResponseEntity.ok("Balada registrada com sucesso!");
     }
     
     @GetMapping("/nome/{nomeBalada}")

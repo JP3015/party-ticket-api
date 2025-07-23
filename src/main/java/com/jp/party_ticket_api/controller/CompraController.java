@@ -41,10 +41,9 @@ public class CompraController {
     }
 	
 	@PostMapping
-    public ResponseEntity<Void> criarCompra(@Valid @RequestBody Compra compra) {
-    	
+    public ResponseEntity<String> criarCompra(@Valid @RequestBody Compra compra) {
 		compraService.criarCompra(compra);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+		return ResponseEntity.ok("Compra registrada com sucesso!");
     }
 	
 	@GetMapping("/nome/{nomeComprador}")

@@ -41,9 +41,9 @@ public class AniversarioController {
     }
     
     @PostMapping
-    public ResponseEntity<Void> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
+    public ResponseEntity<String> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
     	aniversarioService.criarAniversario(aniversario);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+    	return ResponseEntity.ok("Aniversário registrado com sucesso!");
     }
     
     @GetMapping("/nome/{nomeAniversario}")
