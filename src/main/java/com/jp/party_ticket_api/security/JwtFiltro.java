@@ -8,8 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.jp.party_ticket_api.service.UsuarioServiceImpl;
+import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,23 +17,24 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtFiltro extends OncePerRequestFilter {
-
-    @Autowired
-    private UsuarioServiceImpl usuarioService;
-
-    @Autowired
+	
+	@Autowired
+    private IUsuarioService usuarioService;
+	
+	@Autowired
     private JwtUtil jwtUtil;
 
-    public JwtFiltro(UsuarioServiceImpl usuarioService, JwtUtil jwtUtil) {
-		this.usuarioService = usuarioService;
-		this.jwtUtil = jwtUtil;
-	}
-
-
+ 
 	@Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+		String path = request.getServletPath();
+        if (path.startsWith("/auth")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+		
         String authHeader = request.getHeader("Authorization");
 
         String username = null;

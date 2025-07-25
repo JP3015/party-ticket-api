@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.domain.enums.Role;
@@ -16,13 +17,11 @@ import com.jp.party_ticket_api.dto.LoginDTO;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
+@Service
 public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private final UsuarioRepository usuarioRepository;
+	private final PasswordEncoder passwordEncoder;
 	
 
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
@@ -53,7 +52,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 		return new User(
 	            usuario.getNomeUsuario(),
 	            usuario.getSenha(),
-	            Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + usuario.getRole().name()))
+	            Collections.singletonList(new SimpleGrantedAuthority(usuario.getRole().name()))
 	        );
 	}
 	

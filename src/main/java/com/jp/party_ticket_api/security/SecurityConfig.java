@@ -1,8 +1,8 @@
 package com.jp.party_ticket_api.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,17 +13,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtFiltro jwtFiltro;
-
-    public SecurityConfig(JwtFiltro jwtFiltro) {
-		this.jwtFiltro = jwtFiltro;
-	}
-
 	@Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtFiltro jwtFiltro) throws Exception {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
@@ -34,6 +28,7 @@ public class SecurityConfig {
             .addFilterBefore(jwtFiltro, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
+	
 
     @Bean
     public PasswordEncoder passwordEncoder() {

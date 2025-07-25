@@ -12,14 +12,13 @@ import com.jp.party_ticket_api.domain.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	
-	@Query(value = "SELECT u FROM Usuario u WHERE u.nomeUsuario = :nomeUsuario")
+	@Query(value = "SELECT u FROM Usuario u WHERE u.nomeUsuario = :username")
 	Optional<Usuario> findByUsername(@Param("username") String username);
 	
-	@Query(value = "UPDATE SET\n"
+	@Query(value = "UPDATE Usuario u SET\n"
 			+ "u.nomeUsuario = :username,\n"
 			+ "u.email = :email,\n"
 			+ "u.senha = :senha\n"
-			+ "FROM Usuario u\n"
 			+ "WHERE u.id = :id")
 	void updateUsuario(
 			@Param("id") Long id,
