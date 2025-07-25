@@ -23,7 +23,7 @@ import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/baladas")
+@RequestMapping("/baladas")
 public class BaladaController {
 
     private final IBaladaService baladaService;

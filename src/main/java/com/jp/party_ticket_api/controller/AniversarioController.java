@@ -23,7 +23,7 @@ import com.jp.party_ticket_api.service.interfaces.IAniversarioService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/aniversarios")
+@RequestMapping("/aniversarios")
 public class AniversarioController {
 
     private final IAniversarioService aniversarioService;

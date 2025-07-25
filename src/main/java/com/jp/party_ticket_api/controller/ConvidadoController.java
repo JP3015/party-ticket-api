@@ -20,7 +20,7 @@ import com.jp.party_ticket_api.service.interfaces.IConvidadoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/convidados")
+@RequestMapping("/convidados")
 public class ConvidadoController {
 
 	private IConvidadoService convidadoService;

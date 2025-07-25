@@ -21,7 +21,7 @@ import com.jp.party_ticket_api.service.interfaces.ICompraService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/compras")
+@RequestMapping("/compras")
 public class CompraController {
 
 	private ICompraService compraService;
