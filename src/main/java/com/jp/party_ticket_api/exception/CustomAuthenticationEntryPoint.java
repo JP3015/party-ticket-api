@@ -28,7 +28,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         body.put("timestamp", LocalDateTime.now().toString());
         body.put("status", 401);
         body.put("erro", "Não autorizado");
-        body.put("mensagem", "Token inválido.");
+        body.put("mensagem", "Token inválido ou expirado.");
 
         new ObjectMapper().writeValue(response.getOutputStream(), body);
     }
