@@ -15,6 +15,12 @@ public class LoginDTO {
 		this.nomeUsuario = nomeUsuario;
 		this.senha = senha;
 	}
+	
+	public LoginDTO(String nomeUsuario, String email, String senha) {
+		this.nomeUsuario = nomeUsuario;
+		this.email = email;
+		this.senha = senha;
+	}
 
 	public LoginDTO(String nomeUsuario, String email, String senha, Role role) {
 		this.nomeUsuario = nomeUsuario;
