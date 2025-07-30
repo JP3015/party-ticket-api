@@ -20,7 +20,7 @@ import com.jp.party_ticket_api.service.interfaces.IConvidadoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/convidados")
+@RequestMapping("/convidados")
 public class ConvidadoController {
 
 	private IConvidadoService convidadoService;
@@ -40,10 +40,10 @@ public class ConvidadoController {
     }
 	
 	@PostMapping
-    public ResponseEntity<Void> criarConvidado(@Valid @RequestBody Convidado convidado) {
+    public ResponseEntity<String> criarConvidado(@Valid @RequestBody Convidado convidado) {
     	
 		convidadoService.criarConvidado(convidado);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+		return ResponseEntity.ok("Convidado registrado com sucesso!");
     }
 	
 	@GetMapping("/nome/{nomeConvidado}")

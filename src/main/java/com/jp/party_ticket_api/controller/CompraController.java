@@ -21,7 +21,7 @@ import com.jp.party_ticket_api.service.interfaces.ICompraService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/compras")
+@RequestMapping("/compras")
 public class CompraController {
 
 	private ICompraService compraService;
@@ -41,10 +41,9 @@ public class CompraController {
     }
 	
 	@PostMapping
-    public ResponseEntity<Void> criarCompra(@Valid @RequestBody Compra compra) {
-    	
+    public ResponseEntity<String> criarCompra(@Valid @RequestBody Compra compra) {
 		compraService.criarCompra(compra);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+		return ResponseEntity.ok("Compra registrada com sucesso!");
     }
 	
 	@GetMapping("/nome/{nomeComprador}")

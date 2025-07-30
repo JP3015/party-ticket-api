@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/baladas")
+@RequestMapping("/baladas")
 public class BaladaController {
 
     private final IBaladaService baladaService;
@@ -32,6 +33,7 @@ public class BaladaController {
         this.baladaService = baladaService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarBalada(
             @PathVariable Long id,
@@ -41,6 +43,7 @@ public class BaladaController {
         return ResponseEntity.ok("Balada atualizada com sucesso.");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/ingressos/{quantidadeIngressos}")
     public ResponseEntity<String> atualizarBaladaIngressosDisponiveis(
             @PathVariable Long id,
@@ -50,11 +53,12 @@ public class BaladaController {
         return ResponseEntity.ok("Ingressos atualizados com sucesso.");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> criarBalada(@Valid @RequestBody Balada balada) {
+    public ResponseEntity<String> criarBalada(@Valid @RequestBody Balada balada) {
     	
     	baladaService.criarBalada(balada);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+    	return ResponseEntity.ok("Balada registrada com sucesso!");
     }
     
     @GetMapping("/nome/{nomeBalada}")
@@ -78,6 +82,7 @@ public class BaladaController {
         return ResponseEntity.ok(dto);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarBalada(
             @PathVariable Long id) {

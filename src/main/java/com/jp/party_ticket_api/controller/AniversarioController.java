@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,7 @@ import com.jp.party_ticket_api.service.interfaces.IAniversarioService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/aniversarios")
+@RequestMapping("/aniversarios")
 public class AniversarioController {
 
     private final IAniversarioService aniversarioService;
@@ -32,6 +33,7 @@ public class AniversarioController {
         this.aniversarioService = aniversarioService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarAniversario(
             @PathVariable Long id,
@@ -40,10 +42,11 @@ public class AniversarioController {
         return ResponseEntity.ok("Aniversário atualizado com sucesso.");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
+    public ResponseEntity<String> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
     	aniversarioService.criarAniversario(aniversario);
-    	return ResponseEntity.status(HttpStatus.CREATED).build();
+    	return ResponseEntity.ok("Aniversário registrado com sucesso!");
     }
     
     @GetMapping("/nome/{nomeAniversario}")
@@ -64,6 +67,7 @@ public class AniversarioController {
         return ResponseEntity.ok(dto);
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletarAniversario(
             @PathVariable Long id) {
