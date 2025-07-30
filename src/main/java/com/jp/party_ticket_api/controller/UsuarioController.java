@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -60,6 +61,12 @@ public class UsuarioController {
         }
         
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletarUsuario(@PathVariable Long id) {
+    	usuarioService.deletarUsuario(id);
+        return ResponseEntity.ok("Usuário deletado com sucesso.");
     }
 }
 
