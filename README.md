@@ -36,7 +36,6 @@ API REST desenvolvida com Spring Boot para o gerenciamento de eventos, usuários
 
 ### 1 Clone o repositório:
 
-bash
 git clone https://github.com/JP3015/party-ticket-api.git
 
 
@@ -45,21 +44,22 @@ git clone https://github.com/JP3015/party-ticket-api.git
 
 ### 3 Atualize o application.properties:
 
-bash
 spring.datasource.url=jdbc:mysql://localhost:3306/party_ticket
+
 spring.datasource.username=seu_usuario
+
 spring.datasource.password=sua_senha
+
 jwt.secret=umasecretkey
 
 
 ### 4 Build do projeto com Maven:
 
-bash
 mvn clean install
 
 
 ### Rode o projeto:
 
-bash
+```
 mvn spring-boot:run
 
