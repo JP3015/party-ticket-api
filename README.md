@@ -34,32 +34,45 @@ API REST desenvolvida com Spring Boot para o gerenciamento de eventos, usuários
 
 ## ▶️ Como rodar o projeto localmente
 
-### 1 Clone o repositório:
+### ✅ Pré-requisitos
 
+- Java 17 ou superior instalado
+- Maven instalado
+- MySQL rodando localmente
+
+---
+
+### 1. Clone o repositório:
+
+```
 git clone https://github.com/JP3015/party-ticket-api.git
+```
 
+### 2. Configure o banco de dados MySQL:
 
-### 2 Configure o banco de dados MySQL (ex: party_ticket)
+Crie um banco de dados chamado party_ticket no seu MySQL local:
 
+```
+CREATE DATABASE party_ticket;
+```
 
-### 3 Atualize o application.properties:
+### 3. Atualize o application.properties:
 
+```
 spring.datasource.url=jdbc:mysql://localhost:3306/party_ticket
-
 spring.datasource.username=seu_usuario
-
 spring.datasource.password=sua_senha
-
 jwt.secret=umasecretkey
+```
 
+### 4. Build do projeto com Maven:
 
-### 4 Build do projeto com Maven:
-
+```
 mvn clean install
+```
 
-
-### Rode o projeto:
+### 5. Rode o projeto:
 
 ```
 mvn spring-boot:run
-
+```
