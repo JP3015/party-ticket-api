@@ -3,7 +3,7 @@ package com.jp.party_ticket_api.domain;
 import jakarta.persistence.*;
 
 @MappedSuperclass
-public class PresencaEvento {
+public abstract class PresencaEvento {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
