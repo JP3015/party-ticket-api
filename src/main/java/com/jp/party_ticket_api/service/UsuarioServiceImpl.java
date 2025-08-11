@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.domain.enums.Role;
 import com.jp.party_ticket_api.dto.LoginDTO;
+import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
+import com.jp.party_ticket_api.exception.emailRepetidoException;
+import com.jp.party_ticket_api.exception.nomeUsuarioRepetidoException;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
@@ -31,6 +34,12 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 
 
 	public void salvarUsuario(LoginDTO dto) {
+		if (usuarioRepository.findByUsername(dto.getNomeUsuario()).isPresent()) {
+		    throw new nomeUsuarioRepetidoException();
+		}if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
+		    throw new emailRepetidoException();
+		}
+		
 		Usuario usuario = new Usuario();
 		usuario.setNomeUsuario(dto.getNomeUsuario());
 		usuario.setEmail(dto.getEmail());

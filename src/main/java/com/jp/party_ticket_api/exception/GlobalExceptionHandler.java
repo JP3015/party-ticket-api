@@ -16,8 +16,7 @@ public class GlobalExceptionHandler {
         Map<String, Object> erro = new HashMap<>();
         erro.put("timestamp", LocalDateTime.now());
         erro.put("status", HttpStatus.BAD_REQUEST.value());
-        erro.put("erro", "Ingressos indisponíveis");
-        erro.put("mensagem", ex.getMessage());
+        erro.put("erro", ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
@@ -28,8 +27,27 @@ public class GlobalExceptionHandler {
         Map<String, Object> erro = new HashMap<>();
         erro.put("timestamp", LocalDateTime.now());
         erro.put("status", HttpStatus.BAD_REQUEST.value());
-        erro.put("erro", "Excedeu a capacidade");
-        erro.put("mensagem", ex.getMessage());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(nomeUsuarioRepetidoException.class)
+    public ResponseEntity<?> handleNomeUsuarioRepetidoException(nomeUsuarioRepetidoException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(emailRepetidoException.class)
+    public ResponseEntity<?> handleEmailRepetidoException(emailRepetidoException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
