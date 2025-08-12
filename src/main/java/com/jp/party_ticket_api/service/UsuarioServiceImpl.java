@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 		usuario.setNomeUsuario(dto.getNomeUsuario());
 		usuario.setEmail(dto.getEmail());
 		usuario.setSenha(passwordEncoder.encode(dto.getSenha()));
-		usuario.setRole(dto.getRole());
+		usuario.setRole(dto.getRole() == null ? Role.ROLE_USER : dto.getRole());
 		usuarioRepository.save(usuario);
 	}
 	
