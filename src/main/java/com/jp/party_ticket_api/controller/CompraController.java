@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jp.party_ticket_api.domain.Compra;
 import com.jp.party_ticket_api.dto.CompraDTO;
+import com.jp.party_ticket_api.response.ApiResponse;
 import com.jp.party_ticket_api.service.interfaces.ICompraService;
 
 import jakarta.validation.Valid;
@@ -30,20 +31,23 @@ public class CompraController {
 		this.compraService = compraService;
 	}
 	
+	@PostMapping
+    public ResponseEntity<ApiResponse> criarCompra(@Valid @RequestBody Compra compra) {
+		compraService.criarCompra(compra);
+		return ResponseEntity.ok(
+	    	new ApiResponse(HttpStatus.CREATED.value(), "Compra registrada com sucesso!", compra)
+	    );
+    }
 	
 	@PutMapping("/{id}")
-    public ResponseEntity<String> atualizarCompra(
+    public ResponseEntity<ApiResponse> atualizarCompra(
             @PathVariable Long id,
             @RequestBody CompraDTO compra) {
 
 		compraService.atualizarCompra(id, compra);
-		return ResponseEntity.ok("Compra atualizada com sucesso.");
-    }
-	
-	@PostMapping
-    public ResponseEntity<String> criarCompra(@Valid @RequestBody Compra compra) {
-		compraService.criarCompra(compra);
-		return ResponseEntity.ok("Compra registrada com sucesso!");
+		return ResponseEntity.ok(
+		    new ApiResponse(HttpStatus.OK.value(), "Compra atualizada com sucesso.", compra)
+		);
     }
 	
 	@GetMapping("/nome/{nomeComprador}")
@@ -75,11 +79,13 @@ public class CompraController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarCompra(
+    public ResponseEntity<ApiResponse> deletarCompra(
             @PathVariable Long id) {
 
     	compraService.deletarCompra(id);
-    	return ResponseEntity.ok("Compra deletada com sucesso.");
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Compra deletada com sucesso.", null)
+    	);
     }
 	
 }

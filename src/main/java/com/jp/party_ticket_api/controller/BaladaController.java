@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jp.party_ticket_api.domain.Balada;
 import com.jp.party_ticket_api.dto.BaladaDTO;
+import com.jp.party_ticket_api.response.ApiResponse;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 
 import jakarta.validation.Valid;
@@ -34,31 +35,37 @@ public class BaladaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping
+    public ResponseEntity<ApiResponse> criarBalada(@Valid @RequestBody Balada balada) {
+    	
+    	baladaService.criarBalada(balada);
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.CREATED.value(), "Balada registrada com sucesso!", balada)
+    	);
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarBalada(
+    public ResponseEntity<ApiResponse> atualizarBalada(
             @PathVariable Long id,
             @RequestBody BaladaDTO balada) {
 
     	baladaService.atualizarBalada(id, balada);
-        return ResponseEntity.ok("Balada atualizada com sucesso.");
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Balada atualizada com sucesso.", balada)
+        );
     }
     
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/ingressos/{quantidadeIngressos}")
-    public ResponseEntity<String> atualizarBaladaIngressosDisponiveis(
+    public ResponseEntity<ApiResponse> atualizarBaladaIngressosDisponiveis(
             @PathVariable Long id,
             @PathVariable int quantidadeIngressos) {
 
     	baladaService.atualizarBaladaIngressosDisponiveis(id, quantidadeIngressos);
-        return ResponseEntity.ok("Ingressos atualizados com sucesso.");
-    }
-    
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    public ResponseEntity<String> criarBalada(@Valid @RequestBody Balada balada) {
-    	
-    	baladaService.criarBalada(balada);
-    	return ResponseEntity.ok("Balada registrada com sucesso!");
+    	return ResponseEntity.ok(
+        	new ApiResponse(HttpStatus.OK.value(), "Ingressos atualizados com sucesso.", null)
+        );
     }
     
     @GetMapping("/nome/{nomeBalada}")
@@ -84,11 +91,13 @@ public class BaladaController {
     
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarBalada(
+    public ResponseEntity<ApiResponse> deletarBalada(
             @PathVariable Long id) {
 
     	baladaService.deletarBalada(id);
-        return ResponseEntity.ok("Balada deletada com sucesso.");
+    	return ResponseEntity.ok(
+            new ApiResponse(HttpStatus.OK.value(), "Balada deletada com sucesso.", null)
+        );
     }
 
 }

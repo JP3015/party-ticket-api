@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jp.party_ticket_api.domain.Aniversario;
 import com.jp.party_ticket_api.dto.AniversarioDTO;
+import com.jp.party_ticket_api.response.ApiResponse;
 import com.jp.party_ticket_api.service.interfaces.IAniversarioService;
 
 import jakarta.validation.Valid;
@@ -32,21 +33,25 @@ public class AniversarioController {
     public AniversarioController(IAniversarioService aniversarioService) {
         this.aniversarioService = aniversarioService;
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarAniversario(
-            @PathVariable Long id,
-            @RequestBody AniversarioDTO aniversario) {
-    	aniversarioService.atualizarAniversario(id, aniversario);
-        return ResponseEntity.ok("Aniversário atualizado com sucesso.");
-    }
     
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
-    public ResponseEntity<String> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
+    public ResponseEntity<ApiResponse> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
     	aniversarioService.criarAniversario(aniversario);
-    	return ResponseEntity.ok("Aniversário registrado com sucesso!");
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.CREATED.value(), "Aniversário registrado com sucesso!", aniversario)
+    	);
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> atualizarAniversario(
+            @PathVariable Long id,
+            @RequestBody AniversarioDTO aniversario) {
+    	aniversarioService.atualizarAniversario(id, aniversario);
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Aniversário atualizado com sucesso.", aniversario)
+    	);
     }
     
     @GetMapping("/nome/{nomeAniversario}")
@@ -69,10 +74,12 @@ public class AniversarioController {
     
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarAniversario(
+    public ResponseEntity<ApiResponse> deletarAniversario(
             @PathVariable Long id) {
     	aniversarioService.deletarAniversario(id);
-        return ResponseEntity.ok("Aniversário deletado com sucesso.");
+    	return ResponseEntity.ok(
+        	new ApiResponse(HttpStatus.OK.value(), "Aniversário deletado com sucesso.", null)
+        );
     }
 
 }

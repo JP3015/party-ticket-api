@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jp.party_ticket_api.domain.Convidado;
 import com.jp.party_ticket_api.dto.ConvidadoDTO;
+import com.jp.party_ticket_api.response.ApiResponse;
 import com.jp.party_ticket_api.service.interfaces.IConvidadoService;
 
 import jakarta.validation.Valid;
@@ -30,20 +31,24 @@ public class ConvidadoController {
 	}
 	
 	
+	@PostMapping
+    public ResponseEntity<ApiResponse> criarConvidado(@Valid @RequestBody Convidado convidado) {
+    	
+		convidadoService.criarConvidado(convidado);
+		return ResponseEntity.ok(
+		    new ApiResponse(HttpStatus.CREATED.value(), "Convidado registrado com sucesso!", convidado)
+		);
+    }
+	
 	@PutMapping("/{id}")
-    public ResponseEntity<String> atualizarConvidado(
+    public ResponseEntity<ApiResponse> atualizarConvidado(
             @PathVariable Long id,
             @RequestBody ConvidadoDTO convidado) {
 
 		convidadoService.atualizarConvidado(id, convidado);
-		return ResponseEntity.ok("Convidado atualizado com sucesso.");
-    }
-	
-	@PostMapping
-    public ResponseEntity<String> criarConvidado(@Valid @RequestBody Convidado convidado) {
-    	
-		convidadoService.criarConvidado(convidado);
-		return ResponseEntity.ok("Convidado registrado com sucesso!");
+		return ResponseEntity.ok(
+			new ApiResponse(HttpStatus.OK.value(), "Convidado atualizado com sucesso.", convidado)
+		);
     }
 	
 	@GetMapping("/nome/{nomeConvidado}")
@@ -68,10 +73,12 @@ public class ConvidadoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarConvidado(
+    public ResponseEntity<ApiResponse> deletarConvidado(
             @PathVariable Long id) {
 
     	convidadoService.deletarConvidado(id);
-    	return ResponseEntity.ok("Convidado deletado com sucesso.");
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Convidado deletado com sucesso.", null)
+    	);
     }
 }
