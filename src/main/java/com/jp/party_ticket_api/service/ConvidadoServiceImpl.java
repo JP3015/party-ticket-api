@@ -17,11 +17,22 @@ public class ConvidadoServiceImpl implements IConvidadoService{
 	
 	@Autowired
 	private ConvidadoRepository convidadoRepository;
-
+	
 	public ConvidadoServiceImpl(ConvidadoRepository convidadoRepository) {
 		this.convidadoRepository = convidadoRepository;
 	}
 
+	private void validarCapacidade(Long id) {
+		if(capacidadeRestante(id) == 0) {
+			throw new ExcedeuCapacidadeException("A quantidade de convidados excedeu a capacidade permitida.");
+		}
+	}
+	
+	@Override
+	public Integer capacidadeRestante(Long id) {
+		return convidadoRepository.capacidadeRestante(id);
+	}
+	
 	@Override
 	public List<ConvidadoDTO> buscarNome(String nome) {
 		return convidadoRepository.findByNomeConvidado(nome);
@@ -37,16 +48,11 @@ public class ConvidadoServiceImpl implements IConvidadoService{
 		return convidadoRepository.findByIdConvidado(id);
 	}
 	
-	@Override
-	public Integer capacidadeRestante(Long id) {
-		return convidadoRepository.capacidadeRestante(id);
-	}
 
 	@Override
 	public void criarConvidado(Convidado convidado) {
-		if(capacidadeRestante(convidado.getAniversario().getId()) == 0) {
-			throw new ExcedeuCapacidadeException("A quantidade de convidados excedeu a capacidade permitida.");
-		}
+		validarCapacidade(convidado.getAniversario().getId());
+		
 		convidadoRepository.save(convidado);
 	}
 

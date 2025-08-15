@@ -32,8 +32,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(nomeUsuarioRepetidoException.class)
-    public ResponseEntity<?> handleNomeUsuarioRepetidoException(nomeUsuarioRepetidoException ex) {
+    @ExceptionHandler(NomeUsuarioRepetidoException.class)
+    public ResponseEntity<?> handleNomeUsuarioRepetidoException(NomeUsuarioRepetidoException ex) {
         Map<String, Object> erro = new HashMap<>();
         erro.put("timestamp", LocalDateTime.now());
         erro.put("status", HttpStatus.BAD_REQUEST.value());
@@ -42,8 +42,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
     
-    @ExceptionHandler(emailRepetidoException.class)
-    public ResponseEntity<?> handleEmailRepetidoException(emailRepetidoException ex) {
+    @ExceptionHandler(EmailRepetidoException.class)
+    public ResponseEntity<?> handleEmailRepetidoException(EmailRepetidoException ex) {
         Map<String, Object> erro = new HashMap<>();
         erro.put("timestamp", LocalDateTime.now());
         erro.put("status", HttpStatus.BAD_REQUEST.value());

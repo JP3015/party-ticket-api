@@ -26,6 +26,12 @@ public class CompraServiceImpl implements ICompraService{
 		this.compraRepository = compraRepository;
 		this.baladaService = baladaService;
 	}
+	
+	private void validarIngressosDisponiveis(int ingressosDisponiveis, int quantidadeIngressos, String nomeEvento) {
+		if(quantidadeIngressos > 0 && ingressosDisponiveis < quantidadeIngressos) {
+			throw new IngressosIndisponiveisException(nomeEvento);
+		}
+	}
 
 	@Override
 	public List<CompraDTO> buscarNome(String nome) {
@@ -51,9 +57,7 @@ public class CompraServiceImpl implements ICompraService{
 	public void criarCompra(Compra compra) {
 		BaladaDTO balada = baladaService.buscarId(compra.getBalada().getId());
 		
-		if(balada.getIngressosDisponiveis() < compra.getQuantidadeIngressos()) {
-			throw new IngressosIndisponiveisException(balada.getNomeEvento());
-		}
+		validarIngressosDisponiveis(balada.getIngressosDisponiveis(), compra.getQuantidadeIngressos(), balada.getNomeEvento());
 		
 		baladaService.atualizarBaladaIngressosDisponiveis(balada.getId(), balada.getIngressosDisponiveis() - compra.getQuantidadeIngressos());
 		compraRepository.save(compra);
@@ -63,15 +67,9 @@ public class CompraServiceImpl implements ICompraService{
 	public void atualizarCompra(Long id, CompraDTO compra) {
 	    CompraDTO dto = buscarId(id);
 	    
-	    int ingressosAntigos = dto.getQuantidadeIngressos();
-	    int ingressosNovos = compra.getQuantidadeIngressos();
-	    int delta = ingressosNovos - ingressosAntigos;
+	    validarIngressosDisponiveis(dto.getBalada().getIngressosDisponiveis(), compra.getQuantidadeIngressos() - dto.getQuantidadeIngressos(), dto.getBalada().getNomeEvento());
 
-	    if (delta > 0 && dto.getBalada().getIngressosDisponiveis() < delta) {
-	        throw new IngressosIndisponiveisException(dto.getBalada().getNomeEvento());
-	    }
-
-	    baladaService.atualizarBaladaIngressosDisponiveis(dto.getBalada().getId(), dto.getBalada().getIngressosDisponiveis() - delta );
+	    baladaService.atualizarBaladaIngressosDisponiveis(dto.getBalada().getId(), dto.getBalada().getIngressosDisponiveis() - (compra.getQuantidadeIngressos() - dto.getQuantidadeIngressos()));
 	    compraRepository.updateCompra(id, compra.getNome(), compra.getDataCompra(), compra.getEmail(), compra.getQuantidadeIngressos());
 	}
 

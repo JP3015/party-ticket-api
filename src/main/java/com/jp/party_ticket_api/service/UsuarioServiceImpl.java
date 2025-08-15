@@ -15,8 +15,8 @@ import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.domain.enums.Role;
 import com.jp.party_ticket_api.dto.LoginDTO;
 import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
-import com.jp.party_ticket_api.exception.emailRepetidoException;
-import com.jp.party_ticket_api.exception.nomeUsuarioRepetidoException;
+import com.jp.party_ticket_api.exception.EmailRepetidoException;
+import com.jp.party_ticket_api.exception.NomeUsuarioRepetidoException;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
@@ -26,19 +26,26 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	private final UsuarioRepository usuarioRepository;
 	private final PasswordEncoder passwordEncoder;
 	
+	private void validarNomeUsuario(String nomeUsuario) {
+	    if (usuarioRepository.findByUsername(nomeUsuario).isPresent()) {
+	        throw new NomeUsuarioRepetidoException(nomeUsuario);
+	    }
+	}
+	
+	private void validarEmail(String email) {
+	    if (usuarioRepository.findByEmail(email).isPresent()) {
+	        throw new EmailRepetidoException(email);
+	    }
+	}
 
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
 		this.usuarioRepository = usuarioRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
-
 	public void salvarUsuario(LoginDTO dto) {
-		if (usuarioRepository.findByUsername(dto.getNomeUsuario()).isPresent()) {
-		    throw new nomeUsuarioRepetidoException();
-		}if (usuarioRepository.findByEmail(dto.getEmail()).isPresent()) {
-		    throw new emailRepetidoException();
-		}
+		validarNomeUsuario(dto.getNomeUsuario());
+	    validarEmail(dto.getEmail());
 		
 		Usuario usuario = new Usuario();
 		usuario.setNomeUsuario(dto.getNomeUsuario());

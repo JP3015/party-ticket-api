@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.jp.party_ticket_api.domain.Balada;
 import com.jp.party_ticket_api.dto.BaladaDTO;
 import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
+import com.jp.party_ticket_api.exception.NomeUsuarioRepetidoException;
 import com.jp.party_ticket_api.repository.BaladaRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 
@@ -22,6 +23,12 @@ public class BaladaServiceImpl implements IBaladaService{
 		this.baladaRepository = baladaRepository;
 	}
 
+	private void validarCapacidade(int capacidade, int ingressosDisponiveis) {
+		if(capacidade < ingressosDisponiveis) {
+			throw new ExcedeuCapacidadeException();
+		}
+	}
+	
 	@Override
 	public List<BaladaDTO> buscarNomeBalada(String nome) {
 		return baladaRepository.findByNomeBalada(nome);
@@ -39,18 +46,14 @@ public class BaladaServiceImpl implements IBaladaService{
 
 	@Override
 	public void criarBalada(Balada balada) {
-		if(balada.getCapacidade() < balada.getIngressosDisponiveis()) {
-			throw new ExcedeuCapacidadeException();
-		}
+		validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
 		
 		baladaRepository.save(balada);
 	}
 
 	@Override
 	public void atualizarBalada(Long id, BaladaDTO balada) {
-		if(balada.getCapacidade() < balada.getIngressosDisponiveis()) {
-			throw new ExcedeuCapacidadeException();
-		}
+		validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
 		
 		baladaRepository.updateBalada(id, balada.getNomeEvento(), balada.getData(), balada.getLocal(), balada.getCapacidade(), balada.getIngressosDisponiveis());
 	}
@@ -59,9 +62,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	public void atualizarBaladaIngressosDisponiveis(Long id, int ingressosDisponiveis) {
 		BaladaDTO balada = buscarId(id);
 		
-		if(balada.getCapacidade() < ingressosDisponiveis) {
-			throw new ExcedeuCapacidadeException();
-		}
+		validarCapacidade(balada.getCapacidade(), ingressosDisponiveis);
 		
 		baladaRepository.updateBaladaIngressosDisponiveis(id, ingressosDisponiveis);
 		
