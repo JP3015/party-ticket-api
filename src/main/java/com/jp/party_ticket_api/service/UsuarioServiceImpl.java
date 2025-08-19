@@ -18,6 +18,7 @@ import com.jp.party_ticket_api.dto.LoginDTO;
 import com.jp.party_ticket_api.exception.EmailInvalidoException;
 import com.jp.party_ticket_api.exception.EmailRepetidoException;
 import com.jp.party_ticket_api.exception.NomeUsuarioRepetidoException;
+import com.jp.party_ticket_api.exception.UsuarioNaoEncontradoException;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
@@ -45,7 +46,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	    }
 	}
 	
-	private void validarEmailInvalido(String email) {
+	private void validarEmailInvalido(String email) throws EmailInvalidoException {
 	    if (!Pattern.matches(EMAIL_REGEX, email)) {
 	        throw new EmailInvalidoException(email);
 	    }
@@ -75,7 +76,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	@Override
 	public UserDetails loadUserByUsername(String Username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioRepository.findByUsername(Username)
-				.orElseThrow(() ->  new UsernameNotFoundException("Usuário não encontrado com nome: " + Username));
+				.orElseThrow(() ->  new UsuarioNaoEncontradoException(Username));
 	        
 		return new User(
 	            usuario.getNomeUsuario(),

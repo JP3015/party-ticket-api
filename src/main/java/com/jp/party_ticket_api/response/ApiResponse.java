@@ -8,21 +8,21 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ApiResponse {
     private LocalDateTime timestamp;
     private int status;
-    private String mensagem;
+    private String erro;
     private String token;
     private Object dados;
 
-    public ApiResponse(int status, String mensagem, Object dados) {
+    public ApiResponse(int status, String erro, Object dados) {
         this.timestamp = LocalDateTime.now();
         this.status = status;
-        this.mensagem = mensagem;
+        this.erro = erro;
         this.dados = dados;
     }
     
-    public ApiResponse(int status, String mensagem, String token) {
+    public ApiResponse(int status, String erro, String token) {
         this.timestamp = LocalDateTime.now();
         this.status = status;
-        this.mensagem = mensagem;
+        this.erro = erro;
         this.token = token;
     }
 
@@ -42,12 +42,12 @@ public class ApiResponse {
 		this.status = status;
 	}
 
-	public String getMensagem() {
-		return mensagem;
+	public String getErro() {
+		return erro;
 	}
 
-	public void setMensagem(String mensagem) {
-		this.mensagem = mensagem;
+	public void setErro(String erro) {
+		this.erro = erro;
 	}
 
 	public Object getDados() {

@@ -69,9 +69,9 @@ public class UsuarioController {
             	new ApiResponse(HttpStatus.OK.value(), "Usuário logado.", token)
         	);
         }
-        return ResponseEntity.ok(
-            new ApiResponse(HttpStatus.OK.value(), "Credenciais inválidas.", null)
-        );
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "Credenciais inválidas.", null));
     }
     
     @DeleteMapping("/{id}")
