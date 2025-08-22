@@ -3,23 +3,23 @@ package com.jp.party_ticket_api.service;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.domain.enums.Role;
 import com.jp.party_ticket_api.dto.LoginDTO;
+import com.jp.party_ticket_api.dto.UsuarioDTO;
 import com.jp.party_ticket_api.exception.EmailInvalidoException;
 import com.jp.party_ticket_api.exception.EmailRepetidoException;
 import com.jp.party_ticket_api.exception.NomeUsuarioRepetidoException;
 import com.jp.party_ticket_api.exception.UsuarioNaoEncontradoException;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
+import com.jp.party_ticket_api.security.JwtUtil;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
 @Service
@@ -27,11 +27,13 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 
 	private final UsuarioRepository usuarioRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JwtUtil jwtUtil;
 	private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 	
-	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
 		this.usuarioRepository = usuarioRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.jwtUtil = jwtUtil;
 	}
 	
 	private void validarNomeUsuario(String nomeUsuario) {
@@ -46,10 +48,19 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	    }
 	}
 	
-	private void validarEmailInvalido(String email) throws EmailInvalidoException {
+	private void validarEmailInvalido(String email) {
 	    if (!Pattern.matches(EMAIL_REGEX, email)) {
 	        throw new EmailInvalidoException(email);
 	    }
+	}
+	
+	@Override
+	public UsuarioDTO buscarUsuario(String token) {
+		String username = jwtUtil.extrairUsername(token);
+		Usuario usuario = usuarioRepository.findByUsername(username)
+				.orElseThrow(() ->  new UsuarioNaoEncontradoException(username));
+		
+		return new UsuarioDTO(usuario);
 	}
 
 	@Override
@@ -74,9 +85,9 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	
 
 	@Override
-	public UserDetails loadUserByUsername(String Username) throws UsernameNotFoundException {
-		Usuario usuario = usuarioRepository.findByUsername(Username)
-				.orElseThrow(() ->  new UsuarioNaoEncontradoException(Username));
+	public UserDetails loadUserByUsername(String username) {
+		Usuario usuario = usuarioRepository.findByUsername(username)
+				.orElseThrow(() ->  new UsuarioNaoEncontradoException(username));
 	        
 		return new User(
 	            usuario.getNomeUsuario(),

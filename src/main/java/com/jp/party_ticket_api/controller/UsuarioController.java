@@ -1,24 +1,26 @@
 package com.jp.party_ticket_api.controller;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.dto.LoginDTO;
+import com.jp.party_ticket_api.dto.UsuarioDTO;
 import com.jp.party_ticket_api.response.ApiResponse;
 import com.jp.party_ticket_api.security.JwtUtil;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
@@ -44,20 +46,10 @@ public class UsuarioController {
     public ResponseEntity<ApiResponse> registrar(@RequestBody LoginDTO dto) {
         usuarioService.salvarUsuario(dto);
         return ResponseEntity.ok(
-           new ApiResponse(HttpStatus.CREATED.value(), "Usuário registrado com sucesso!", dto)
+           new ApiResponse(HttpStatus.CREATED.value(), "Usuário registrado com sucesso!", null)
         );
     }
 
-	
-	@PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> atualizarUsuario(
-            @PathVariable Long id,
-            @RequestBody LoginDTO dto) {
-    	usuarioService.atualizarUsuario(id, dto);
-    	return ResponseEntity.ok(
-    		new ApiResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso.", dto)
-    	);
-    }
 
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestBody LoginDTO dto) {
@@ -73,6 +65,24 @@ public class UsuarioController {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body(new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "Credenciais inválidas.", null));
     }
+	
+	@PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> atualizarUsuario(
+            @PathVariable Long id,
+            @RequestBody LoginDTO dto) {
+    	usuarioService.atualizarUsuario(id, dto);
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso.", null)
+    	);
+    }
+
+    
+	@GetMapping("/me")
+	public ResponseEntity<UsuarioDTO> buscarUsuario(@RequestHeader("Authorization") String authorizationHeader) {
+	    UsuarioDTO dto = usuarioService.buscarUsuario(authorizationHeader.substring(7));
+	    return ResponseEntity.ok(dto);
+	}
+
     
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deletarUsuario(@PathVariable Long id) {

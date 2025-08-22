@@ -3,6 +3,7 @@ package com.jp.party_ticket_api.service.interfaces;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.jp.party_ticket_api.dto.LoginDTO;
+import com.jp.party_ticket_api.dto.UsuarioDTO;
 
 public interface IUsuarioService extends UserDetailsService{
 	
@@ -11,5 +12,7 @@ public interface IUsuarioService extends UserDetailsService{
 	void atualizarUsuario(Long id, LoginDTO dto);
 	
 	void deletarUsuario(Long id);
+
+	UsuarioDTO buscarUsuario(String token);
 
 }
