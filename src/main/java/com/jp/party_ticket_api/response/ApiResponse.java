@@ -6,32 +6,32 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL) 
 public class ApiResponse {
-    private LocalDateTime timestamp;
+    private LocalDateTime data;
     private int status;
-    private String erro;
+    private String mensagem;
     private String token;
     private Object dados;
 
-    public ApiResponse(int status, String erro, Object dados) {
-        this.timestamp = LocalDateTime.now();
+    public ApiResponse(int status, String mensagem, Object dados) {
+        this.data = LocalDateTime.now();
         this.status = status;
-        this.erro = erro;
+        this.mensagem = mensagem;
         this.dados = dados;
     }
     
-    public ApiResponse(int status, String erro, String token) {
-        this.timestamp = LocalDateTime.now();
+    public ApiResponse(int status, String mensagem, String token) {
+        this.data = LocalDateTime.now();
         this.status = status;
-        this.erro = erro;
+        this.mensagem = mensagem;
         this.token = token;
     }
 
-	public LocalDateTime getTimestamp() {
-		return timestamp;
+	public LocalDateTime getData() {
+		return data;
 	}
 
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
+	public void setData(LocalDateTime data) {
+		this.data = data;
 	}
 
 	public int getStatus() {
@@ -42,12 +42,12 @@ public class ApiResponse {
 		this.status = status;
 	}
 
-	public String getErro() {
-		return erro;
+	public String getMensagem() {
+		return mensagem;
 	}
 
-	public void setErro(String erro) {
-		this.erro = erro;
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
 
 	public Object getDados() {
