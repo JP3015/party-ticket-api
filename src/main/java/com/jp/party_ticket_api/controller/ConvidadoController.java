@@ -35,9 +35,11 @@ public class ConvidadoController {
     public ResponseEntity<ApiResponse> criarConvidado(@Valid @RequestBody Convidado convidado) {
     	
 		convidadoService.criarConvidado(convidado);
-		return ResponseEntity.ok(
-		    new ApiResponse(HttpStatus.CREATED.value(), "Convidado registrado com sucesso!", convidado)
-		);
+		return ResponseEntity
+				.status(HttpStatus.CREATED.value())
+		        .body(
+				    new ApiResponse(HttpStatus.CREATED.value(), "Convidado registrado com sucesso!", convidado)
+				);
     }
 	
 	@PutMapping("/{id}")

@@ -34,9 +34,11 @@ public class CompraController {
 	@PostMapping
     public ResponseEntity<ApiResponse> criarCompra(@Valid @RequestBody Compra compra) {
 		compraService.criarCompra(compra);
-		return ResponseEntity.ok(
-	    	new ApiResponse(HttpStatus.CREATED.value(), "Compra registrada com sucesso!", compra)
-	    );
+		return ResponseEntity
+				.status(HttpStatus.CREATED.value())
+		        .body(
+			    	new ApiResponse(HttpStatus.CREATED.value(), "Compra registrada com sucesso!", compra)
+			    );
     }
 	
 	@PutMapping("/{id}")

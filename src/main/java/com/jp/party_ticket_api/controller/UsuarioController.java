@@ -45,9 +45,11 @@ public class UsuarioController {
     @PostMapping("/registrar")
     public ResponseEntity<ApiResponse> registrar(@RequestBody LoginDTO dto) {
         usuarioService.salvarUsuario(dto);
-        return ResponseEntity.ok(
-           new ApiResponse(HttpStatus.CREATED.value(), "Usuário registrado com sucesso!", null)
-        );
+        return ResponseEntity
+        	.status(HttpStatus.CREATED.value())
+	        .body(
+	           new ApiResponse(HttpStatus.CREATED.value(), "Usuário registrado com sucesso!", null)
+	        );
     }
 
 

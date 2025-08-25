@@ -39,9 +39,11 @@ public class BaladaController {
     public ResponseEntity<ApiResponse> criarBalada(@Valid @RequestBody Balada balada) {
     	
     	baladaService.criarBalada(balada);
-    	return ResponseEntity.ok(
-    		new ApiResponse(HttpStatus.CREATED.value(), "Balada registrada com sucesso!", balada)
-    	);
+    	return ResponseEntity
+    			.status(HttpStatus.CREATED.value())
+    	        .body(
+		    		new ApiResponse(HttpStatus.CREATED.value(), "Balada registrada com sucesso!", balada)
+		    	);
     }
     
     @PreAuthorize("hasRole('ADMIN')")

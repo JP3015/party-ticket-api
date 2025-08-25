@@ -38,9 +38,11 @@ public class AniversarioController {
     @PostMapping
     public ResponseEntity<ApiResponse> criarAniversario(@Valid @RequestBody Aniversario aniversario) {
     	aniversarioService.criarAniversario(aniversario);
-    	return ResponseEntity.ok(
-    		new ApiResponse(HttpStatus.CREATED.value(), "Aniversário registrado com sucesso!", aniversario)
-    	);
+    	return ResponseEntity
+    			.status(HttpStatus.CREATED.value())
+    	        .body(
+		    		new ApiResponse(HttpStatus.CREATED.value(), "Aniversário registrado com sucesso!", aniversario)
+		    	);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
