@@ -77,6 +77,17 @@ public class UsuarioController {
     		new ApiResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso.", null)
     	);
     }
+	
+	
+	@PutMapping("/mudar-senha")
+    public ResponseEntity<ApiResponse> mudarSenhaUsuario(
+    		@RequestHeader("Authorization") String authorizationHeader,
+    		@RequestBody String novaSenha) {
+    	usuarioService.mudarSenha(authorizationHeader.substring(7), novaSenha);
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Senha do usuário atualizado com sucesso.", null)
+    	);
+    }
 
     
 	@GetMapping("/me")

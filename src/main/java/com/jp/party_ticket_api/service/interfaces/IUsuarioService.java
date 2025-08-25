@@ -9,6 +9,8 @@ public interface IUsuarioService extends UserDetailsService{
 	
 	void salvarUsuario(LoginDTO dto);
 	
+	void mudarSenha(String token, String novaSenha);
+	
 	void atualizarUsuario(Long id, LoginDTO dto);
 	
 	void deletarUsuario(Long id);

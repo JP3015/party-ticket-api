@@ -83,6 +83,14 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 		usuarioRepository.updateUsuario(id, dto.getNomeUsuario(), dto.getEmail(), passwordEncoder.encode(dto.getSenha()));
 	}
 	
+	@Override
+	public void mudarSenha(String token, String novaSenha) {
+		String username = jwtUtil.extrairUsername(token);
+		Usuario usuario = usuarioRepository.findByUsername(username)
+				.orElseThrow(() ->  new UsuarioNaoEncontradoException(username));
+
+		usuarioRepository.updateSenha(usuario.getId(), passwordEncoder.encode(novaSenha));
+	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) {
@@ -100,5 +108,4 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	public void deletarUsuario(Long id) {
 		usuarioRepository.deleteById(id);
 	}
-
 }
