@@ -62,6 +62,12 @@ public class AniversarioController {
         return ResponseEntity.ok(dto);
     }
     
+    @GetMapping
+    public ResponseEntity<List<Aniversario>> listarAniversarios() {
+    	List<Aniversario> lista = aniversarioService.listarAniversarios();
+        return ResponseEntity.ok(lista);
+    }
+    
     @GetMapping("/data/{data}")
     public ResponseEntity<List<AniversarioDTO>> buscarDataAniversario(@PathVariable LocalDate data) {
     	List<AniversarioDTO> dto = aniversarioService.buscarData(data);

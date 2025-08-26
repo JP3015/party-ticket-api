@@ -25,6 +25,11 @@ public class AniversarioServiceImpl implements IAniversarioService{
 	public List<AniversarioDTO> buscarNomeAniversario(String nome) {
 		return aniversarioRepository.findByNomeAniversario(nome);
 	}
+	
+	@Override
+	public List<Aniversario> listarAniversarios() {
+		return aniversarioRepository.findAll();
+	}
 
 	@Override
 	public List<AniversarioDTO> buscarData(LocalDate data) {
