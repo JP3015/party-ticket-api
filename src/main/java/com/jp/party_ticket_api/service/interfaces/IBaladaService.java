@@ -14,6 +14,8 @@ public interface IBaladaService {
 	 
 	 BaladaDTO buscarId(Long id);
 	 
+	 List<BaladaDTO> listarBaladas();
+	 
 	 void criarBalada(Balada balada);
 
 	 void atualizarBalada(Long id, BaladaDTO balada);

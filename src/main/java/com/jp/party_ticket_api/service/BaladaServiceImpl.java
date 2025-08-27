@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.jp.party_ticket_api.domain.Balada;
 import com.jp.party_ticket_api.dto.BaladaDTO;
 import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
-import com.jp.party_ticket_api.exception.NomeUsuarioRepetidoException;
 import com.jp.party_ticket_api.repository.BaladaRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 
@@ -42,6 +41,11 @@ public class BaladaServiceImpl implements IBaladaService{
 	@Override
 	public BaladaDTO buscarId(Long id) {
 		return baladaRepository.findByIdBalada(id);
+	}
+	
+	@Override
+	public List<BaladaDTO> listarBaladas() {
+		return baladaRepository.findAll().stream().map(BaladaDTO::new).toList();
 	}
 
 	@Override

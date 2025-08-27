@@ -91,6 +91,13 @@ public class BaladaController {
         return ResponseEntity.ok(dto);
     }
     
+    @GetMapping
+    public ResponseEntity<List<BaladaDTO>> listarBaladas() {
+        
+    	List<BaladaDTO> baladas = baladaService.listarBaladas();
+        return ResponseEntity.ok(baladas);
+    }
+    
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deletarBalada(
