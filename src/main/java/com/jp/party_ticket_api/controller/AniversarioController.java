@@ -63,8 +63,8 @@ public class AniversarioController {
     }
     
     @GetMapping
-    public ResponseEntity<List<Aniversario>> listarAniversarios() {
-    	List<Aniversario> lista = aniversarioService.listarAniversarios();
+    public ResponseEntity<List<AniversarioDTO>> listarAniversarios() {
+    	List<AniversarioDTO> lista = aniversarioService.listarAniversarios();
         return ResponseEntity.ok(lista);
     }
     

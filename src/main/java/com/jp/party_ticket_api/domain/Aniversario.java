@@ -1,7 +1,11 @@
 package com.jp.party_ticket_api.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -13,6 +17,11 @@ public class Aniversario extends Evento{
 	
 	@Column(name = "IDADE_ANIVERSARIANTE", nullable = false)
 	private int idadeAniversariante;
+	
+	@OneToMany
+	@JoinColumn(name = "ID_EVENTO")
+	private List<Convidado> convidados;
+
 	
 	public Aniversario() {}
 

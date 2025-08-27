@@ -2,24 +2,24 @@ package com.jp.party_ticket_api.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Convidado;
 import com.jp.party_ticket_api.dto.ConvidadoDTO;
 import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
+import com.jp.party_ticket_api.repository.AniversarioRepository;
 import com.jp.party_ticket_api.repository.ConvidadoRepository;
-import com.jp.party_ticket_api.service.interfaces.IAniversarioService;
 import com.jp.party_ticket_api.service.interfaces.IConvidadoService;
 
 @Service
 public class ConvidadoServiceImpl implements IConvidadoService{
 	
-	@Autowired
 	private ConvidadoRepository convidadoRepository;
+	private AniversarioRepository aniversarioRepository;
 	
-	public ConvidadoServiceImpl(ConvidadoRepository convidadoRepository) {
+	public ConvidadoServiceImpl(ConvidadoRepository convidadoRepository, AniversarioRepository aniversarioRepository) {
 		this.convidadoRepository = convidadoRepository;
+		this.aniversarioRepository = aniversarioRepository;
 	}
 
 	private void validarCapacidade(Long id) {
@@ -30,7 +30,7 @@ public class ConvidadoServiceImpl implements IConvidadoService{
 	
 	@Override
 	public Integer capacidadeRestante(Long id) {
-		return convidadoRepository.capacidadeRestante(id);
+		return aniversarioRepository.capacidadeRestante(id);
 	}
 	
 	@Override

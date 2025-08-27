@@ -20,6 +20,11 @@ public class AniversarioServiceImpl implements IAniversarioService{
 	public AniversarioServiceImpl(AniversarioRepository aniversarioRepository) {
 		this.aniversarioRepository = aniversarioRepository;
 	}
+	
+	@Override
+	public Integer capacidadeRestante(Long id) {
+		return aniversarioRepository.capacidadeRestante(id);
+	}
 
 	@Override
 	public List<AniversarioDTO> buscarNomeAniversario(String nome) {
@@ -27,8 +32,10 @@ public class AniversarioServiceImpl implements IAniversarioService{
 	}
 	
 	@Override
-	public List<Aniversario> listarAniversarios() {
-		return aniversarioRepository.findAll();
+	public List<AniversarioDTO> listarAniversarios() {
+		 return aniversarioRepository.findAll().stream()
+			        .map(a -> new AniversarioDTO(a, capacidadeRestante(a.getId())))
+			        .toList();
 	}
 
 	@Override

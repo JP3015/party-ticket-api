@@ -20,7 +20,8 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 			+ "c.id,\n"
 			+ "c.nome,\n"
 			+ "c.email,\n"
-			+ "c.aniversario\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
 			+ "WHERE c.nome = :nome")
@@ -30,7 +31,8 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 			+ "c.id,\n"
 			+ "c.nome,\n"
 			+ "c.email,\n"
-			+ "c.aniversario\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
 			+ "WHERE c.email = :email")
@@ -40,19 +42,13 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 			+ "c.id,\n"
 			+ "c.nome,\n"
 			+ "c.email,\n"
-			+ "c.aniversario\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
 			+ "WHERE c.id = :id")
 	ConvidadoDTO findByIdConvidado(@Param("id") Long id);
 	
-	@Query("SELECT a.capacidade - COUNT(c)\n"
-			+ "FROM Aniversario a\n"
-			+ "LEFT JOIN Convidado c ON c.aniversario.id = a.id\n"
-			+ "WHERE a.id = :id\n"
-			+ "GROUP BY a.capacidade\n")
-	Integer capacidadeRestante(@Param("id") Long id);
-    
     
 	@Modifying
     @Transactional
