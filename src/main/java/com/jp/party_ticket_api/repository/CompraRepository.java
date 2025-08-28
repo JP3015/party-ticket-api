@@ -54,6 +54,19 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 			+ "WHERE DATE(c.dataCompra) = :data")
     List<CompraDTO> findByDataCompra(@Param("data") LocalDate data);
 	
+	
+	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
+			+ "c.id,\n"
+			+ "c.nome,\n"
+			+ "c.email,\n"
+			+ "c.quantidadeIngressos,\n"
+			+ "c.dataCompra,\n"
+			+ "c.balada\n"
+			+ ")\n"
+			+ "FROM Compra c\n"
+			+ "WHERE c.balada.id = :id")
+    List<CompraDTO> findByBalada(@Param("id") Long id);
+	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
 			+ "c.id,\n"
 			+ "c.nome,\n"
@@ -81,4 +94,10 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
     		@Param("dataCompra") LocalDateTime dataCompra,
     		@Param("email") String email,
     		@Param("quantidadeIngressos") int quantidadeIngressos);
+	
+	@Modifying
+	@Transactional
+	@Query("DELETE FROM Compra c WHERE c.balada.id = :id")
+	void deleteByIdBalada(@Param("id") Long id);
+
 }

@@ -10,16 +10,19 @@ import com.jp.party_ticket_api.domain.Balada;
 import com.jp.party_ticket_api.dto.BaladaDTO;
 import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
 import com.jp.party_ticket_api.repository.BaladaRepository;
+import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 
 @Service
 public class BaladaServiceImpl implements IBaladaService{
 	
-	@Autowired
-	private BaladaRepository baladaRepository;
 	
-	public BaladaServiceImpl(BaladaRepository baladaRepository) {
+	private BaladaRepository baladaRepository;
+	private CompraRepository compraRepository;
+	
+	public BaladaServiceImpl(BaladaRepository baladaRepository, CompraRepository compraRepository) {
 		this.baladaRepository = baladaRepository;
+		this.compraRepository = compraRepository;
 	}
 
 	private void validarCapacidade(int capacidade, int ingressosDisponiveis) {
@@ -74,6 +77,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	
 	@Override
 	public void deletarBalada(Long id) {
+		compraRepository.deleteByIdBalada(id);;
 		baladaRepository.deleteById(id);
 	}
 

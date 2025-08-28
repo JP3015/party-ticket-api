@@ -73,6 +73,13 @@ public class ConvidadoController {
 		ConvidadoDTO dto = convidadoService.buscarId(id);
         return ResponseEntity.ok(dto);
     }
+	
+	@GetMapping("/listar/{idAniversario}")
+    public ResponseEntity<List<ConvidadoDTO>> listarConvidado(@PathVariable Long idAniversario) {
+        
+		List<ConvidadoDTO> dto = convidadoService.listarConvidado(idAniversario);
+        return ResponseEntity.ok(dto);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deletarConvidado(

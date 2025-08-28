@@ -38,6 +38,18 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 			+ "WHERE c.email = :email")
     List<ConvidadoDTO> findByEmail(String email);
 	
+	
+	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"
+			+ "c.id,\n"
+			+ "c.nome,\n"
+			+ "c.email,\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
+			+ ")\n"
+			+ "FROM Convidado c\n"
+			+ "WHERE c.aniversario.id = :id")
+    List<ConvidadoDTO> findByAniversario(Long id);
+	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"
 			+ "c.id,\n"
 			+ "c.nome,\n"
@@ -60,4 +72,10 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
     		@Param("id") Long id, 
     		@Param("nomeConvidado") String nomeConvidado,
     		@Param("email") String email);
+	
+	
+	@Modifying
+	@Transactional
+	@Query("DELETE FROM Convidado c WHERE c.aniversario.id = :id")
+	void deleteByIdAniversario(@Param("id") Long id);
 }

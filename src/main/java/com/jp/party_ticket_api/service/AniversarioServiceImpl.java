@@ -9,16 +9,18 @@ import org.springframework.stereotype.Service;
 import com.jp.party_ticket_api.domain.Aniversario;
 import com.jp.party_ticket_api.dto.AniversarioDTO;
 import com.jp.party_ticket_api.repository.AniversarioRepository;
+import com.jp.party_ticket_api.repository.ConvidadoRepository;
 import com.jp.party_ticket_api.service.interfaces.IAniversarioService;
 
 @Service
 public class AniversarioServiceImpl implements IAniversarioService{
 	
-	@Autowired
 	private AniversarioRepository aniversarioRepository;
+	private ConvidadoRepository convidadoRepository;
 	
-	public AniversarioServiceImpl(AniversarioRepository aniversarioRepository) {
+	public AniversarioServiceImpl(AniversarioRepository aniversarioRepository, ConvidadoRepository convidadoRepository) {
 		this.aniversarioRepository = aniversarioRepository;
+		this.convidadoRepository = convidadoRepository;
 	}
 	
 	@Override
@@ -61,6 +63,7 @@ public class AniversarioServiceImpl implements IAniversarioService{
 	
 	@Override
 	public void deletarAniversario(Long id) {
+		convidadoRepository.deleteByIdAniversario(id);
 		aniversarioRepository.deleteById(id);
 	}
 

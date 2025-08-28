@@ -79,7 +79,14 @@ public class CompraController {
     	CompraDTO dto = compraService.buscarId(id);
         return ResponseEntity.ok(dto);
     }
-
+	
+	@GetMapping("/listar/{idBalada}")
+    public ResponseEntity<List<CompraDTO>> listarCompra(@PathVariable Long idBalada) {
+        
+		List<CompraDTO> dto = compraService.listarCompra(idBalada);
+        return ResponseEntity.ok(dto);
+    }
+	
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deletarCompra(
             @PathVariable Long id) {

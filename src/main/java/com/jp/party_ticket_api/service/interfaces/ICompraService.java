@@ -14,6 +14,8 @@ public interface ICompraService {
 	    
 	List<CompraDTO> buscarDataCompra(LocalDate data);
 	
+	List<CompraDTO> listarCompra(Long id);
+	
 	CompraDTO buscarId(Long id);
 	
 	void criarCompra(Compra compra);

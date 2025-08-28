@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.jp.party_ticket_api.domain.Compra;
 import com.jp.party_ticket_api.dto.BaladaDTO;
 import com.jp.party_ticket_api.dto.CompraDTO;
+import com.jp.party_ticket_api.dto.ConvidadoDTO;
 import com.jp.party_ticket_api.exception.IngressosIndisponiveisException;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
@@ -80,6 +81,11 @@ public class CompraServiceImpl implements ICompraService{
 		
 		baladaService.atualizarBaladaIngressosDisponiveis(dto.getBalada().getId(), dto.getBalada().getIngressosDisponiveis() + dto.getQuantidadeIngressos());
 		compraRepository.deleteById(id);
+	}
+
+	@Override
+	public List<CompraDTO> listarCompra(Long id) {
+		return compraRepository.findByBalada(id);
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Convidado;
+import com.jp.party_ticket_api.dto.AniversarioDTO;
 import com.jp.party_ticket_api.dto.ConvidadoDTO;
 import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
 import com.jp.party_ticket_api.repository.AniversarioRepository;
@@ -64,6 +65,11 @@ public class ConvidadoServiceImpl implements IConvidadoService{
 	@Override
 	public void deletarConvidado(Long id) {
 		convidadoRepository.deleteById(id);
+	}
+
+	@Override
+	public List<ConvidadoDTO> listarConvidado(Long id) {
+		return convidadoRepository.findByAniversario(id);
 	}
 
 }
