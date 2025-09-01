@@ -91,7 +91,7 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
     void updateCompra(
     		@Param("id") Long id, 
     		@Param("nomeComprador") String nomeComprador,
-    		@Param("dataCompra") LocalDateTime dataCompra,
+    		@Param("dataCompra") LocalDate dataCompra,
     		@Param("email") String email,
     		@Param("quantidadeIngressos") int quantidadeIngressos);
 	

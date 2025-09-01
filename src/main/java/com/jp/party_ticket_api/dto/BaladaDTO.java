@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.jp.party_ticket_api.domain.Balada;
@@ -9,7 +10,7 @@ public class BaladaDTO {
 	
 	private Long id;
 	private String nomeEvento;
-	private LocalDateTime data;
+	private LocalDate data;
 	private String local;
 	private int ingressosDisponiveis;
 	private int capacidade;
@@ -25,7 +26,7 @@ public class BaladaDTO {
 	    this.capacidade = balada.getCapacidade();
 	}
 	
-	public BaladaDTO(Long id, String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
+	public BaladaDTO(Long id, String nomeEvento, LocalDate data, String local, int ingressosDisponiveis,
 			int capacidade) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
@@ -35,7 +36,7 @@ public class BaladaDTO {
 		this.capacidade = capacidade;
 	}
 	
-	public BaladaDTO(String nomeEvento, LocalDateTime data, String local, int ingressosDisponiveis,
+	public BaladaDTO(String nomeEvento, LocalDate data, String local, int ingressosDisponiveis,
 			int capacidade) {
 		this.nomeEvento = nomeEvento;
 		this.data = data;
@@ -59,10 +60,10 @@ public class BaladaDTO {
 	public void setNomeEvento(String nomeEvento) {
 		this.nomeEvento = nomeEvento;
 	}
-	public LocalDateTime getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(LocalDateTime data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getLocal() {

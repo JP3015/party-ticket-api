@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.jp.party_ticket_api.domain.Aniversario;
@@ -8,7 +9,7 @@ public class AniversarioDTO {
 
 	private Long id;
 	private String nomeEvento;
-	private LocalDateTime data;
+	private LocalDate data;
 	private String local;
 	private String nomeAniversariante;
 	private int idadeAniversariante;
@@ -30,7 +31,7 @@ public class AniversarioDTO {
 		this.capacidadeRestante = capacidadeRestante;
 	}
 
-	public AniversarioDTO(Long id, String nomeEvento, LocalDateTime data, String local, String nomeAniversariante,
+	public AniversarioDTO(Long id, String nomeEvento, LocalDate data, String local, String nomeAniversariante,
 			int idadeAniversariante, int capacidade, int capacidadeRestante) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
@@ -42,7 +43,7 @@ public class AniversarioDTO {
 		this.capacidadeRestante = capacidadeRestante;
 	}
 	
-	public AniversarioDTO(String nomeEvento, LocalDateTime data, String local, String nomeAniversariante,
+	public AniversarioDTO(String nomeEvento, LocalDate data, String local, String nomeAniversariante,
 			int idadeAniversariante, int capacidade, int capacidadeRestante) {
 		this.nomeEvento = nomeEvento;
 		this.data = data;
@@ -65,10 +66,10 @@ public class AniversarioDTO {
 	public void setNomeEvento(String nomeEvento) {
 		this.nomeEvento = nomeEvento;
 	}
-	public LocalDateTime getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(LocalDateTime data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getLocal() {

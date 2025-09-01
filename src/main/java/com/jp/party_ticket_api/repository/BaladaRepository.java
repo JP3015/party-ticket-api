@@ -72,7 +72,7 @@ public interface BaladaRepository extends JpaRepository<Balada, Long> {
     void updateBalada(
     		@Param("id") Long id, 
     		@Param("nomeEvento") String nomeEvento,
-    		@Param("data") LocalDateTime data,
+    		@Param("data") LocalDate data,
     		@Param("local") String local,
     		@Param("capacidade") int capacidade,
     		@Param("ingressosDisponiveis") int ingressosDisponiveis);

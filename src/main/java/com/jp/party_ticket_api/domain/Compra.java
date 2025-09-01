@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -17,7 +18,7 @@ public class Compra extends PresencaEvento{
 	private int quantidadeIngressos;
 	
 	@Column(name = "DT_COMPRA", nullable = false)
-	private LocalDateTime dataCompra;
+	private LocalDate dataCompra;
 	
 	@ManyToOne
     @JoinColumn(name = "ID_EVENTO")
@@ -25,7 +26,7 @@ public class Compra extends PresencaEvento{
 	
 	public Compra() {}
 
-	public Compra(int quantidadeIngressos, LocalDateTime dataCompra, Balada balada) {
+	public Compra(int quantidadeIngressos, LocalDate dataCompra, Balada balada) {
 		super();
 		this.quantidadeIngressos = quantidadeIngressos;
 		this.dataCompra = dataCompra;
@@ -40,11 +41,11 @@ public class Compra extends PresencaEvento{
 		this.quantidadeIngressos = quantidadeIngressos;
 	}
 
-	public LocalDateTime getDataCompra() {
+	public LocalDate getDataCompra() {
 		return dataCompra;
 	}
 
-	public void setDataCompra(LocalDateTime dataCompra) {
+	public void setDataCompra(LocalDate dataCompra) {
 		this.dataCompra = dataCompra;
 	}
 

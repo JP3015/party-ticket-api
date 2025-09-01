@@ -72,7 +72,7 @@ public interface AniversarioRepository extends JpaRepository<Aniversario, Long> 
     void updateAniversario(
     		@Param("id") Long id, 
     		@Param("nomeEvento") String nomeEvento,
-    		@Param("data") LocalDateTime data,
+    		@Param("data") LocalDate data,
     		@Param("local") String local,
     		@Param("nomeAniversariante") String nomeAniversariante,
     		@Param("idadeAniversariante") int idadeAniversariante,
