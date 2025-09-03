@@ -81,10 +81,10 @@ public class CompraController {
     }
 	
 	@GetMapping("/listar/{idBalada}")
-    public ResponseEntity<List<CompraDTO>> listarCompra(@PathVariable Long idBalada) {
+    public ResponseEntity<List<Compra>> listarCompra(@PathVariable Long idBalada) {
         
-		List<CompraDTO> dto = compraService.listarCompra(idBalada);
-        return ResponseEntity.ok(dto);
+		List<Compra> compras = compraService.listarCompra(idBalada);
+        return ResponseEntity.ok(compras);
     }
 	
     @DeleteMapping("/{id}")

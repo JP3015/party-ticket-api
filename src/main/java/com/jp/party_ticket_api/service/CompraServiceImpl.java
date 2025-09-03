@@ -84,7 +84,7 @@ public class CompraServiceImpl implements ICompraService{
 	}
 
 	@Override
-	public List<CompraDTO> listarCompra(Long id) {
+	public List<Compra> listarCompra(Long id) {
 		return compraRepository.findByBalada(id);
 	}
 

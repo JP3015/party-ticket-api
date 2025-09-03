@@ -34,10 +34,8 @@ public class AniversarioServiceImpl implements IAniversarioService{
 	}
 	
 	@Override
-	public List<AniversarioDTO> listarAniversarios() {
-		 return aniversarioRepository.findAll().stream()
-			        .map(a -> new AniversarioDTO(a, capacidadeRestante(a.getId())))
-			        .toList();
+	public List<Aniversario> listarAniversarios() {
+		 return aniversarioRepository.findAll();
 	}
 
 	@Override

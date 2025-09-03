@@ -75,10 +75,10 @@ public class ConvidadoController {
     }
 	
 	@GetMapping("/listar/{idAniversario}")
-    public ResponseEntity<List<ConvidadoDTO>> listarConvidado(@PathVariable Long idAniversario) {
+    public ResponseEntity<List<Convidado>> listarConvidado(@PathVariable Long idAniversario) {
         
-		List<ConvidadoDTO> dto = convidadoService.listarConvidado(idAniversario);
-        return ResponseEntity.ok(dto);
+		List<Convidado> convidados = convidadoService.listarConvidado(idAniversario);
+        return ResponseEntity.ok(convidados);
     }
 
     @DeleteMapping("/{id}")

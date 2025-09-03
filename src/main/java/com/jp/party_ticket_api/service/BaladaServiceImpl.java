@@ -47,8 +47,8 @@ public class BaladaServiceImpl implements IBaladaService{
 	}
 	
 	@Override
-	public List<BaladaDTO> listarBaladas() {
-		return baladaRepository.findAll().stream().map(BaladaDTO::new).toList();
+	public List<Balada> listarBaladas() {
+		return baladaRepository.findAll();
 	}
 
 	@Override

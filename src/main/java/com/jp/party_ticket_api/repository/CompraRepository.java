@@ -55,17 +55,8 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
     List<CompraDTO> findByDataCompra(@Param("data") LocalDate data);
 	
 	
-	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
-			+ "c.id,\n"
-			+ "c.nome,\n"
-			+ "c.email,\n"
-			+ "c.quantidadeIngressos,\n"
-			+ "c.dataCompra,\n"
-			+ "c.balada\n"
-			+ ")\n"
-			+ "FROM Compra c\n"
-			+ "WHERE c.balada.id = :id")
-    List<CompraDTO> findByBalada(@Param("id") Long id);
+	@Query(value = "SELECT c FROM Compra c WHERE c.balada.id = :id")
+    List<Compra> findByBalada(@Param("id") Long id);
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
 			+ "c.id,\n"

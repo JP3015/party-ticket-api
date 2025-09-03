@@ -92,9 +92,9 @@ public class BaladaController {
     }
     
     @GetMapping
-    public ResponseEntity<List<BaladaDTO>> listarBaladas() {
+    public ResponseEntity<List<Balada>> listarBaladas() {
         
-    	List<BaladaDTO> baladas = baladaService.listarBaladas();
+    	List<Balada> baladas = baladaService.listarBaladas();
         return ResponseEntity.ok(baladas);
     }
     

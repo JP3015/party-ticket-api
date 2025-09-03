@@ -20,7 +20,7 @@ public interface IAniversarioService {
 
 	 void deletarAniversario(Long id);
 
-	List<AniversarioDTO> listarAniversarios();
+	List<Aniversario> listarAniversarios();
 
 	Integer capacidadeRestante(Long id);
 }	

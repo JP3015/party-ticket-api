@@ -68,7 +68,7 @@ public class ConvidadoServiceImpl implements IConvidadoService{
 	}
 
 	@Override
-	public List<ConvidadoDTO> listarConvidado(Long id) {
+	public List<Convidado> listarConvidado(Long id) {
 		return convidadoRepository.findByAniversario(id);
 	}
 

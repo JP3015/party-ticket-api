@@ -23,5 +23,5 @@ public interface IConvidadoService {
 
 	void deletarConvidado(Long id);
 	
-	List<ConvidadoDTO> listarConvidado(Long id);
+	List<Convidado> listarConvidado(Long id);
 }

@@ -39,16 +39,8 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
     List<ConvidadoDTO> findByEmail(String email);
 	
 	
-	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"
-			+ "c.id,\n"
-			+ "c.nome,\n"
-			+ "c.email,\n"
-			+ "c.aniversario,\n"
-			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
-			+ ")\n"
-			+ "FROM Convidado c\n"
-			+ "WHERE c.aniversario.id = :id")
-    List<ConvidadoDTO> findByAniversario(Long id);
+	@Query(value = "SELECT c FROM Convidado c WHERE c.aniversario.id = :id")
+    List<Convidado> findByAniversario(Long id);
 	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"
 			+ "c.id,\n"
