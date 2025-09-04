@@ -24,7 +24,7 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
-			+ "WHERE c.nome = :nome")
+			+ "WHERE LOWER(c.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<ConvidadoDTO> findByNomeConvidado(String nome);
     
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"

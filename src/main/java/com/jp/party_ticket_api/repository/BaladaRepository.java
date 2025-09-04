@@ -26,7 +26,7 @@ public interface BaladaRepository extends JpaRepository<Balada, Long> {
 			+ "b.ingressosDisponiveis,\n"
 			+ "b.capacidade\n"
 			+ ")\n"
-			+ "FROM Balada b WHERE b.nomeEvento = :nome")
+			+ "FROM Balada b WHERE LOWER(b.nomeEvento) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<BaladaDTO> findByNomeBalada(@Param("nome") String nome);
 
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.BaladaDTO(\n"

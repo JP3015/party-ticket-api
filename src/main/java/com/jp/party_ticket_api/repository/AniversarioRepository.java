@@ -28,7 +28,7 @@ public interface AniversarioRepository extends JpaRepository<Aniversario, Long> 
 			+ "a.capacidade,\n"
 			+ "(a.capacidade - SIZE(a.convidados))\n"
 			+ ")\n"
-			+ "FROM Aniversario a WHERE a.nomeEvento = :nome")
+			+ "FROM Aniversario a WHERE LOWER(a.nomeEvento) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<AniversarioDTO> findByNomeAniversario(@Param("nome") String nome);
 
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.AniversarioDTO(\n"

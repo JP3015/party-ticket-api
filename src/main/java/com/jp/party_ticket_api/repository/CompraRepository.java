@@ -27,7 +27,7 @@ public interface CompraRepository extends JpaRepository<Compra, Long> {
 			+ "c.balada\n"
 			+ ")\n"
 			+ "FROM Compra c\n"
-			+ "WHERE c.nome = :nome")
+			+ "WHERE LOWER(c.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<CompraDTO> findByNomeComprador(String nome);
     
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.CompraDTO(\n"
