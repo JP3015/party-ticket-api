@@ -3,7 +3,6 @@ package com.jp.party_ticket_api.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Aniversario;

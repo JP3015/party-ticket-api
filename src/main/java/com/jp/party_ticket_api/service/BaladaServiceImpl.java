@@ -3,32 +3,26 @@ package com.jp.party_ticket_api.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Balada;
 import com.jp.party_ticket_api.dto.BaladaDTO;
-import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
 import com.jp.party_ticket_api.repository.BaladaRepository;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
+import com.jp.party_ticket_api.validator.CapacidadeValidator;
 
 @Service
 public class BaladaServiceImpl implements IBaladaService{
 	
+	private final BaladaRepository baladaRepository;
+	private final CompraRepository compraRepository;
+	private final CapacidadeValidator capacidadeValidator; 
 	
-	private BaladaRepository baladaRepository;
-	private CompraRepository compraRepository;
-	
-	public BaladaServiceImpl(BaladaRepository baladaRepository, CompraRepository compraRepository) {
+	public BaladaServiceImpl(BaladaRepository baladaRepository, CompraRepository compraRepository, CapacidadeValidator capacidadeValidator) {
 		this.baladaRepository = baladaRepository;
 		this.compraRepository = compraRepository;
-	}
-
-	private void validarCapacidade(int capacidade, int ingressosDisponiveis) {
-		if(capacidade < ingressosDisponiveis) {
-			throw new ExcedeuCapacidadeException();
-		}
+		this.capacidadeValidator = capacidadeValidator;
 	}
 	
 	@Override
@@ -53,14 +47,14 @@ public class BaladaServiceImpl implements IBaladaService{
 
 	@Override
 	public void criarBalada(Balada balada) {
-		validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
+		capacidadeValidator.validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
 		
 		baladaRepository.save(balada);
 	}
 
 	@Override
 	public void atualizarBalada(Long id, BaladaDTO balada) {
-		validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
+		capacidadeValidator.validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
 		
 		baladaRepository.updateBalada(id, balada.getNomeEvento(), balada.getData(), balada.getLocal(), balada.getCapacidade(), balada.getIngressosDisponiveis());
 	}
@@ -69,7 +63,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	public void atualizarBaladaIngressosDisponiveis(Long id, int ingressosDisponiveis) {
 		BaladaDTO balada = buscarId(id);
 		
-		validarCapacidade(balada.getCapacidade(), ingressosDisponiveis);
+		capacidadeValidator.validarCapacidade(balada.getCapacidade(), ingressosDisponiveis);
 		
 		baladaRepository.updateBaladaIngressosDisponiveis(id, ingressosDisponiveis);
 		

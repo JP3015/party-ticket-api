@@ -1,7 +1,6 @@
 package com.jp.party_ticket_api.service;
 
 import java.util.Collections;
-import java.util.regex.Pattern;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,13 +13,12 @@ import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.domain.enums.Role;
 import com.jp.party_ticket_api.dto.LoginDTO;
 import com.jp.party_ticket_api.dto.UsuarioDTO;
-import com.jp.party_ticket_api.exception.EmailInvalidoException;
-import com.jp.party_ticket_api.exception.EmailRepetidoException;
-import com.jp.party_ticket_api.exception.NomeUsuarioRepetidoException;
 import com.jp.party_ticket_api.exception.UsuarioNaoEncontradoException;
 import com.jp.party_ticket_api.repository.UsuarioRepository;
 import com.jp.party_ticket_api.security.JwtUtil;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
+import com.jp.party_ticket_api.validator.EmailValidator;
+import com.jp.party_ticket_api.validator.UsuarioValidator;
 
 @Service
 public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
@@ -28,30 +26,16 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	private final UsuarioRepository usuarioRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
-	private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+	private final EmailValidator emailValidator; 
+	private final UsuarioValidator usuarioValidator; 
 	
-	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
+	public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder, 
+			JwtUtil jwtUtil, EmailValidator emailValidator, UsuarioValidator usuarioValidator) {
 		this.usuarioRepository = usuarioRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtUtil = jwtUtil;
-	}
-	
-	private void validarNomeUsuario(String nomeUsuario) {
-	    if (usuarioRepository.findByUsername(nomeUsuario).isPresent()) {
-	        throw new NomeUsuarioRepetidoException(nomeUsuario);
-	    }
-	}
-	
-	private void validarEmailExistente(String email) {
-	    if (usuarioRepository.findByEmail(email).isPresent()) {
-	        throw new EmailRepetidoException(email);
-	    }
-	}
-	
-	private void validarEmailInvalido(String email) {
-	    if (!Pattern.matches(EMAIL_REGEX, email)) {
-	        throw new EmailInvalidoException(email);
-	    }
+		this.emailValidator = emailValidator;
+		this.usuarioValidator = usuarioValidator;
 	}
 	
 	@Override
@@ -65,9 +49,9 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 
 	@Override
 	public void salvarUsuario(LoginDTO dto) {
-		validarNomeUsuario(dto.getNomeUsuario());
-		validarEmailExistente(dto.getEmail());
-		validarEmailInvalido(dto.getEmail());
+		usuarioValidator.validarNomeUsuario(usuarioRepository.findByUsername(dto.getNomeUsuario()).isPresent(), dto.getNomeUsuario());
+		emailValidator.validarEmail(usuarioRepository.findByEmail(dto.getEmail()).isPresent(), dto.getEmail());
+		emailValidator.validarEmail(dto.getEmail());
 		
 		Usuario usuario = new Usuario();
 		usuario.setNomeUsuario(dto.getNomeUsuario());
@@ -79,7 +63,7 @@ public class UsuarioServiceImpl implements UserDetailsService, IUsuarioService{
 	
 	@Override
 	public void atualizarUsuario(Long id, LoginDTO dto) {
-		validarEmailInvalido(dto.getEmail());
+		emailValidator.validarEmail(dto.getEmail());
 		usuarioRepository.updateUsuario(id, dto.getNomeUsuario(), dto.getEmail(), passwordEncoder.encode(dto.getSenha()));
 	}
 	
