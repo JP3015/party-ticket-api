@@ -1,22 +1,27 @@
 package com.jp.party_ticket_api.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jp.party_ticket_api.dto.AniversarioDTO;
+import com.jp.party_ticket_api.domain.Usuario;
 import com.jp.party_ticket_api.dto.LoginDTO;
+import com.jp.party_ticket_api.dto.UsuarioDTO;
+import com.jp.party_ticket_api.response.ApiResponse;
 import com.jp.party_ticket_api.security.JwtUtil;
 import com.jp.party_ticket_api.service.interfaces.IUsuarioService;
 
@@ -37,36 +42,67 @@ public class UsuarioController {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	@PostMapping("/registrar")
-    public ResponseEntity<String> registrar(@RequestBody LoginDTO dto) {
+    @PostMapping("/registrar")
+    public ResponseEntity<ApiResponse> registrar(@RequestBody LoginDTO dto) {
         usuarioService.salvarUsuario(dto);
-        return ResponseEntity.ok("Usuário registrado com sucesso!");
-    }
-	
-	@PutMapping("/{id}")
-    public ResponseEntity<String> atualizarUsuario(
-            @PathVariable Long id,
-            @RequestBody LoginDTO dto) {
-    	usuarioService.atualizarUsuario(id, dto);
-        return ResponseEntity.ok("Usuário atualizado com sucesso.");
+        return ResponseEntity
+        	.status(HttpStatus.CREATED.value())
+	        .body(
+	           new ApiResponse(HttpStatus.CREATED.value(), "Usuário registrado com sucesso!", null)
+	        );
     }
 
+
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO dto) {
+    public ResponseEntity<ApiResponse> login(@RequestBody LoginDTO dto) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(dto.getNomeUsuario());
 
         if (userDetails != null && passwordEncoder.matches(dto.getSenha(), userDetails.getPassword())) {
             String token = jwtUtil.gerarToken(userDetails);
-            return ResponseEntity.ok(token);
+            return ResponseEntity.ok(
+            	new ApiResponse(HttpStatus.OK.value(), "Usuário logado.", token)
+        	);
         }
-        
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(new ApiResponse(HttpStatus.UNAUTHORIZED.value(), "Credenciais inválidas.", null));
     }
+	
+	@PutMapping("/{id}")
+    public ResponseEntity<ApiResponse> atualizarUsuario(
+            @PathVariable Long id,
+            @RequestBody LoginDTO dto) {
+    	usuarioService.atualizarUsuario(id, dto);
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso.", null)
+    	);
+    }
+	
+	
+	@PutMapping("/mudar-senha")
+    public ResponseEntity<ApiResponse> mudarSenhaUsuario(
+    		@RequestHeader("Authorization") String authorizationHeader,
+    		@RequestBody String novaSenha) {
+    	usuarioService.mudarSenha(authorizationHeader.substring(7), novaSenha);
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Senha do usuário atualizado com sucesso.", null)
+    	);
+    }
+
+    
+	@GetMapping("/me")
+	public ResponseEntity<UsuarioDTO> buscarUsuario(@RequestHeader("Authorization") String authorizationHeader) {
+	    UsuarioDTO dto = usuarioService.buscarUsuario(authorizationHeader.substring(7));
+	    return ResponseEntity.ok(dto);
+	}
+
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletarUsuario(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse> deletarUsuario(@PathVariable Long id) {
     	usuarioService.deletarUsuario(id);
-        return ResponseEntity.ok("Usuário deletado com sucesso.");
+    	return ResponseEntity.ok(
+    		new ApiResponse(HttpStatus.OK.value(), "Usuário deletado com sucesso.", null)
+        );
     }
 }
 

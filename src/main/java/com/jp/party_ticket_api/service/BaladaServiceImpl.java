@@ -3,25 +3,32 @@ package com.jp.party_ticket_api.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Balada;
 import com.jp.party_ticket_api.dto.BaladaDTO;
-import com.jp.party_ticket_api.exception.ExcedeuCapacidadeException;
 import com.jp.party_ticket_api.repository.BaladaRepository;
+import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
+import com.jp.party_ticket_api.validator.CapacidadeValidator;
+import com.jp.party_ticket_api.validator.DataValidator;
 
 @Service
 public class BaladaServiceImpl implements IBaladaService{
 	
-	@Autowired
-	private BaladaRepository baladaRepository;
+	private final BaladaRepository baladaRepository;
+	private final CompraRepository compraRepository;
+	private final CapacidadeValidator capacidadeValidator; 
+	private final DataValidator dataValidator;
 	
-	public BaladaServiceImpl(BaladaRepository baladaRepository) {
+	public BaladaServiceImpl(BaladaRepository baladaRepository, CompraRepository compraRepository, 
+			CapacidadeValidator capacidadeValidator, DataValidator dataValidator) {
 		this.baladaRepository = baladaRepository;
+		this.compraRepository = compraRepository;
+		this.capacidadeValidator = capacidadeValidator;
+		this.dataValidator = dataValidator;
 	}
-
+	
 	@Override
 	public List<BaladaDTO> buscarNomeBalada(String nome) {
 		return baladaRepository.findByNomeBalada(nome);
@@ -36,21 +43,24 @@ public class BaladaServiceImpl implements IBaladaService{
 	public BaladaDTO buscarId(Long id) {
 		return baladaRepository.findByIdBalada(id);
 	}
+	
+	@Override
+	public List<Balada> listarBaladas() {
+		return baladaRepository.findAll();
+	}
 
 	@Override
 	public void criarBalada(Balada balada) {
-		if(balada.getCapacidade() < balada.getIngressosDisponiveis()) {
-			throw new ExcedeuCapacidadeException();
-		}
+		capacidadeValidator.validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
+		dataValidator.validarData(balada.getData());
 		
 		baladaRepository.save(balada);
 	}
 
 	@Override
 	public void atualizarBalada(Long id, BaladaDTO balada) {
-		if(balada.getCapacidade() < balada.getIngressosDisponiveis()) {
-			throw new ExcedeuCapacidadeException();
-		}
+		capacidadeValidator.validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
+		dataValidator.validarData(balada.getData());
 		
 		baladaRepository.updateBalada(id, balada.getNomeEvento(), balada.getData(), balada.getLocal(), balada.getCapacidade(), balada.getIngressosDisponiveis());
 	}
@@ -59,9 +69,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	public void atualizarBaladaIngressosDisponiveis(Long id, int ingressosDisponiveis) {
 		BaladaDTO balada = buscarId(id);
 		
-		if(balada.getCapacidade() < ingressosDisponiveis) {
-			throw new ExcedeuCapacidadeException();
-		}
+		capacidadeValidator.validarCapacidade(balada.getCapacidade(), ingressosDisponiveis);
 		
 		baladaRepository.updateBaladaIngressosDisponiveis(id, ingressosDisponiveis);
 		
@@ -69,6 +77,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	
 	@Override
 	public void deletarBalada(Long id) {
+		compraRepository.deleteByIdBalada(id);
 		baladaRepository.deleteById(id);
 	}
 

@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import jakarta.persistence.*;
 
@@ -15,7 +16,7 @@ public abstract class Evento {
 	protected String nomeEvento;
 	
 	@Column(name = "DATA", nullable = false)
-	protected LocalDateTime data;
+	protected LocalDate data;
 	
 	@Column(name = "LOCAL", nullable = false, length = 100)
 	protected String local;
@@ -25,7 +26,7 @@ public abstract class Evento {
 	
 	public Evento() {}
 
-	public Evento(Long id, String nomeEvento, LocalDateTime data, String local, int capacidade) {
+	public Evento(Long id, String nomeEvento, LocalDate data, String local, int capacidade) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
 		this.data = data;
@@ -45,10 +46,10 @@ public abstract class Evento {
 	public void setNomeEvento(String nomeEvento) {
 		this.nomeEvento = nomeEvento;
 	}
-	public LocalDateTime getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(LocalDateTime data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getLocal() {

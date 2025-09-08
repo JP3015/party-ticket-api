@@ -3,7 +3,6 @@ package com.jp.party_ticket_api.service;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jp.party_ticket_api.domain.Compra;
@@ -13,18 +12,22 @@ import com.jp.party_ticket_api.exception.IngressosIndisponiveisException;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 import com.jp.party_ticket_api.service.interfaces.ICompraService;
+import com.jp.party_ticket_api.validator.EmailValidator;
+import com.jp.party_ticket_api.validator.IngressosValidator;
 
 @Service
 public class CompraServiceImpl implements ICompraService{
 	
-	@Autowired
-	private CompraRepository compraRepository;
-	
-	private IBaladaService baladaService;
+	private final CompraRepository compraRepository;
+	private final IBaladaService baladaService;
+	private final EmailValidator emailValidator;
+	private final IngressosValidator ingressosValidator;
 
-	public CompraServiceImpl(CompraRepository compraRepository, IBaladaService baladaService) {
+	public CompraServiceImpl(CompraRepository compraRepository, IBaladaService baladaService, EmailValidator emailValidator, IngressosValidator ingressosValidator) {
 		this.compraRepository = compraRepository;
 		this.baladaService = baladaService;
+		this.emailValidator = emailValidator;
+		this.ingressosValidator = ingressosValidator;
 	}
 
 	@Override
@@ -51,9 +54,8 @@ public class CompraServiceImpl implements ICompraService{
 	public void criarCompra(Compra compra) {
 		BaladaDTO balada = baladaService.buscarId(compra.getBalada().getId());
 		
-		if(balada.getIngressosDisponiveis() < compra.getQuantidadeIngressos()) {
-			throw new IngressosIndisponiveisException(balada.getNomeEvento());
-		}
+		emailValidator.validarEmail(compra.getEmail());
+		ingressosValidator.validarIngressosDisponiveis(balada.getIngressosDisponiveis(), compra.getQuantidadeIngressos(), balada.getNomeEvento());
 		
 		baladaService.atualizarBaladaIngressosDisponiveis(balada.getId(), balada.getIngressosDisponiveis() - compra.getQuantidadeIngressos());
 		compraRepository.save(compra);
@@ -63,15 +65,10 @@ public class CompraServiceImpl implements ICompraService{
 	public void atualizarCompra(Long id, CompraDTO compra) {
 	    CompraDTO dto = buscarId(id);
 	    
-	    int ingressosAntigos = dto.getQuantidadeIngressos();
-	    int ingressosNovos = compra.getQuantidadeIngressos();
-	    int delta = ingressosNovos - ingressosAntigos;
+	    emailValidator.validarEmail(compra.getEmail());
+	    ingressosValidator.validarIngressosDisponiveis(dto.getBalada().getIngressosDisponiveis(), compra.getQuantidadeIngressos() - dto.getQuantidadeIngressos(), dto.getBalada().getNomeEvento());
 
-	    if (delta > 0 && dto.getBalada().getIngressosDisponiveis() < delta) {
-	        throw new IngressosIndisponiveisException(dto.getBalada().getNomeEvento());
-	    }
-
-	    baladaService.atualizarBaladaIngressosDisponiveis(dto.getBalada().getId(), dto.getBalada().getIngressosDisponiveis() - delta );
+	    baladaService.atualizarBaladaIngressosDisponiveis(dto.getBalada().getId(), dto.getBalada().getIngressosDisponiveis() - (compra.getQuantidadeIngressos() - dto.getQuantidadeIngressos()));
 	    compraRepository.updateCompra(id, compra.getNome(), compra.getDataCompra(), compra.getEmail(), compra.getQuantidadeIngressos());
 	}
 
@@ -82,6 +79,11 @@ public class CompraServiceImpl implements ICompraService{
 		
 		baladaService.atualizarBaladaIngressosDisponiveis(dto.getBalada().getId(), dto.getBalada().getIngressosDisponiveis() + dto.getQuantidadeIngressos());
 		compraRepository.deleteById(id);
+	}
+
+	@Override
+	public List<Compra> listarCompra(Long id) {
+		return compraRepository.findByBalada(id);
 	}
 
 }

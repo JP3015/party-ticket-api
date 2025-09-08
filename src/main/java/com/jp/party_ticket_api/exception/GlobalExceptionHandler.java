@@ -16,8 +16,7 @@ public class GlobalExceptionHandler {
         Map<String, Object> erro = new HashMap<>();
         erro.put("timestamp", LocalDateTime.now());
         erro.put("status", HttpStatus.BAD_REQUEST.value());
-        erro.put("erro", "Ingressos indisponíveis");
-        erro.put("mensagem", ex.getMessage());
+        erro.put("erro", ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
@@ -28,8 +27,47 @@ public class GlobalExceptionHandler {
         Map<String, Object> erro = new HashMap<>();
         erro.put("timestamp", LocalDateTime.now());
         erro.put("status", HttpStatus.BAD_REQUEST.value());
-        erro.put("erro", "Excedeu a capacidade");
-        erro.put("mensagem", ex.getMessage());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(NomeUsuarioRepetidoException.class)
+    public ResponseEntity<?> handleNomeUsuarioRepetidoException(NomeUsuarioRepetidoException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(EmailRepetidoException.class)
+    public ResponseEntity<?> handleEmailRepetidoException(EmailRepetidoException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(EmailInvalidoException.class)
+    public ResponseEntity<?> handleEmailInvalidoException(EmailInvalidoException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(DataException.class)
+    public ResponseEntity<?> handleEmailInvalidoException(DataException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }

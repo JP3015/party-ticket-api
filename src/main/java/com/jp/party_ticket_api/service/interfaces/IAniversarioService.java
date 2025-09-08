@@ -19,4 +19,8 @@ public interface IAniversarioService {
 	 void atualizarAniversario(Long id, AniversarioDTO aniversario);
 
 	 void deletarAniversario(Long id);
+
+	List<Aniversario> listarAniversarios();
+
+	Integer capacidadeRestante(Long id);
 }	

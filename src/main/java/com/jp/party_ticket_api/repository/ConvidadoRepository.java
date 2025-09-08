@@ -20,39 +20,39 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
 			+ "c.id,\n"
 			+ "c.nome,\n"
 			+ "c.email,\n"
-			+ "c.aniversario\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
-			+ "WHERE c.nome = :nome")
+			+ "WHERE LOWER(c.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<ConvidadoDTO> findByNomeConvidado(String nome);
     
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"
 			+ "c.id,\n"
 			+ "c.nome,\n"
 			+ "c.email,\n"
-			+ "c.aniversario\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
 			+ "WHERE c.email = :email")
     List<ConvidadoDTO> findByEmail(String email);
 	
+	
+	@Query(value = "SELECT c FROM Convidado c WHERE c.aniversario.id = :id")
+    List<Convidado> findByAniversario(Long id);
+	
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.ConvidadoDTO(\n"
 			+ "c.id,\n"
 			+ "c.nome,\n"
 			+ "c.email,\n"
-			+ "c.aniversario\n"
+			+ "c.aniversario,\n"
+			+ "(c.aniversario.capacidade - SIZE(c.aniversario.convidados))\n"
 			+ ")\n"
 			+ "FROM Convidado c\n"
 			+ "WHERE c.id = :id")
 	ConvidadoDTO findByIdConvidado(@Param("id") Long id);
 	
-	@Query("SELECT a.capacidade - COUNT(c)\n"
-			+ "FROM Aniversario a\n"
-			+ "LEFT JOIN Convidado c ON c.aniversario.id = a.id\n"
-			+ "WHERE a.id = :id\n"
-			+ "GROUP BY a.capacidade\n")
-	Integer capacidadeRestante(@Param("id") Long id);
-    
     
 	@Modifying
     @Transactional
@@ -64,4 +64,10 @@ public interface ConvidadoRepository extends JpaRepository<Convidado, Long> {
     		@Param("id") Long id, 
     		@Param("nomeConvidado") String nomeConvidado,
     		@Param("email") String email);
+	
+	
+	@Modifying
+	@Transactional
+	@Query("DELETE FROM Convidado c WHERE c.aniversario.id = :id")
+	void deleteByIdAniversario(@Param("id") Long id);
 }

@@ -25,9 +25,10 @@ public interface AniversarioRepository extends JpaRepository<Aniversario, Long> 
 			+ "a.local,\n"
 			+ "a.nomeAniversariante,\n"
 			+ "a.idadeAniversariante,\n"
-			+ "a.capacidade"
+			+ "a.capacidade,\n"
+			+ "(a.capacidade - SIZE(a.convidados))\n"
 			+ ")\n"
-			+ "FROM Aniversario a WHERE a.nomeEvento = :nome")
+			+ "FROM Aniversario a WHERE LOWER(a.nomeEvento) LIKE LOWER(CONCAT('%', :nome, '%'))")
     List<AniversarioDTO> findByNomeAniversario(@Param("nome") String nome);
 
 	@Query(value = "SELECT new com.jp.party_ticket_api.dto.AniversarioDTO(\n"
@@ -37,7 +38,8 @@ public interface AniversarioRepository extends JpaRepository<Aniversario, Long> 
 			+ "a.local,\n"
 			+ "a.nomeAniversariante,\n"
 			+ "a.idadeAniversariante,\n"
-			+ "a.capacidade"
+			+ "a.capacidade,\n"
+			+ "(a.capacidade - SIZE(a.convidados))\n"
 			+ ")\n"
 			+ "FROM Aniversario a WHERE DATE(a.data) = :data")
     List<AniversarioDTO> findByData(@Param("data") LocalDate data);
@@ -50,7 +52,8 @@ public interface AniversarioRepository extends JpaRepository<Aniversario, Long> 
 			+ "a.local,\n"
 			+ "a.nomeAniversariante,\n"
 			+ "a.idadeAniversariante,\n"
-			+ "a.capacidade"
+			+ "a.capacidade,\n"
+			+ "(a.capacidade - SIZE(a.convidados))\n"
 			+ ")\n"
 			+ "FROM Aniversario a WHERE a.id = :id")
 	AniversarioDTO findByIdAniversario(@Param("id") Long id);
@@ -69,9 +72,19 @@ public interface AniversarioRepository extends JpaRepository<Aniversario, Long> 
     void updateAniversario(
     		@Param("id") Long id, 
     		@Param("nomeEvento") String nomeEvento,
-    		@Param("data") LocalDateTime data,
+    		@Param("data") LocalDate data,
     		@Param("local") String local,
     		@Param("nomeAniversariante") String nomeAniversariante,
     		@Param("idadeAniversariante") int idadeAniversariante,
     		@Param("capacidade") int capacidade);
+	
+	
+
+	@Query("SELECT a.capacidade - COUNT(c)\n"
+			+ "FROM Aniversario a\n"
+			+ "LEFT JOIN Convidado c ON c.aniversario.id = a.id\n"
+			+ "WHERE a.id = :id\n"
+			+ "GROUP BY a.capacidade\n")
+	Integer capacidadeRestante(@Param("id") Long id);
+    
 }
