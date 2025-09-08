@@ -12,11 +12,11 @@ public class ConvidadoDTO {
 	
 	public ConvidadoDTO() {}
 
-	public ConvidadoDTO(Long id, String nome, String email, Aniversario aniversario) {
+	public ConvidadoDTO(Long id, String nome, String email, Aniversario aniversario, int capacidadeRestante) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.aniversario = new AniversarioDTO(aniversario);
+		this.aniversario = new AniversarioDTO(aniversario, capacidadeRestante);
 	}
 	
 	public ConvidadoDTO(String nome, String email) {

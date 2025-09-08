@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.jp.party_ticket_api.domain.Aniversario;
@@ -8,15 +9,18 @@ public class AniversarioDTO {
 
 	private Long id;
 	private String nomeEvento;
-	private LocalDateTime data;
+	private LocalDate data;
 	private String local;
 	private String nomeAniversariante;
 	private int idadeAniversariante;
 	private int capacidade;
+	private int capacidadeRestante;
+	
 	
 	public AniversarioDTO() {}
-	
-	public AniversarioDTO(Aniversario aniversario) {
+
+
+	public AniversarioDTO(Aniversario aniversario, int capacidadeRestante) {
 		this.id = aniversario.getId();
 	    this.nomeEvento = aniversario.getNomeEvento();
 	    this.data = aniversario.getData();
@@ -24,10 +28,11 @@ public class AniversarioDTO {
 	    this.nomeAniversariante = aniversario.getNomeAniversariante();
 		this.idadeAniversariante = aniversario.getIdadeAniversariante();
 		this.capacidade = aniversario.getCapacidade();
+		this.capacidadeRestante = capacidadeRestante;
 	}
 
-	public AniversarioDTO(Long id, String nomeEvento, LocalDateTime data, String local, String nomeAniversariante,
-			int idadeAniversariante, int capacidade) {
+	public AniversarioDTO(Long id, String nomeEvento, LocalDate data, String local, String nomeAniversariante,
+			int idadeAniversariante, int capacidade, int capacidadeRestante) {
 		this.id = id;
 		this.nomeEvento = nomeEvento;
 		this.data = data;
@@ -35,16 +40,18 @@ public class AniversarioDTO {
 		this.nomeAniversariante = nomeAniversariante;
 		this.idadeAniversariante = idadeAniversariante;
 		this.capacidade = capacidade;
+		this.capacidadeRestante = capacidadeRestante;
 	}
 	
-	public AniversarioDTO(String nomeEvento, LocalDateTime data, String local, String nomeAniversariante,
-			int idadeAniversariante, int capacidade) {
+	public AniversarioDTO(String nomeEvento, LocalDate data, String local, String nomeAniversariante,
+			int idadeAniversariante, int capacidade, int capacidadeRestante) {
 		this.nomeEvento = nomeEvento;
 		this.data = data;
 		this.local = local;
 		this.nomeAniversariante = nomeAniversariante;
 		this.idadeAniversariante = idadeAniversariante;
 		this.capacidade = capacidade;
+		this.capacidadeRestante = capacidadeRestante;
 	}
 	
 	public Long getId() {
@@ -59,10 +66,10 @@ public class AniversarioDTO {
 	public void setNomeEvento(String nomeEvento) {
 		this.nomeEvento = nomeEvento;
 	}
-	public LocalDateTime getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(LocalDateTime data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public String getLocal() {
@@ -91,4 +98,14 @@ public class AniversarioDTO {
 	public void setCapacidade(int capacidade) {
 		this.capacidade = capacidade;
 	}
+
+	public int getCapacidadeRestante() {
+		return capacidadeRestante;
+	}
+
+	public void setCapacidadeRestante(int capacidadeRestante) {
+		this.capacidadeRestante = capacidadeRestante;
+	}
+	
+	
 }

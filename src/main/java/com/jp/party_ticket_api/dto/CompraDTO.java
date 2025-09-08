@@ -1,5 +1,6 @@
 package com.jp.party_ticket_api.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.jp.party_ticket_api.domain.Balada;
@@ -10,13 +11,13 @@ public class CompraDTO {
 	private String nome;
 	private String email;
 	private int quantidadeIngressos;
-	private LocalDateTime dataCompra;
+	private LocalDate dataCompra;
 	private BaladaDTO balada;
 	
 	public CompraDTO() {}
 	
 	public CompraDTO(Long id, String nome, String email, int quantidadeIngressos,
-			LocalDateTime dataCompra, Balada balada) {
+			LocalDate dataCompra, Balada balada) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
@@ -26,7 +27,7 @@ public class CompraDTO {
 	}
 
 	public CompraDTO(String nome, String email, int quantidadeIngressos,
-			LocalDateTime dataCompra) {
+			LocalDate dataCompra) {
 		this.nome = nome;
 		this.email = email;
 		this.quantidadeIngressos = quantidadeIngressos;
@@ -68,11 +69,11 @@ public class CompraDTO {
 		this.quantidadeIngressos = quantidadeIngressos;
 	}
 
-	public LocalDateTime getDataCompra() {
+	public LocalDate getDataCompra() {
 		return dataCompra;
 	}
 
-	public void setDataCompra(LocalDateTime dataCompra) {
+	public void setDataCompra(LocalDate dataCompra) {
 		this.dataCompra = dataCompra;
 	}
 	

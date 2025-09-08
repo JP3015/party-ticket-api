@@ -26,8 +26,7 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
         body.put("status", 403);
-        body.put("erro", "Acesso negado");
-        body.put("mensagem", "Você não tem permissão para acessar este recurso.");
+        body.put("erro", "Você não tem permissão para acessar este recurso.");
 
         new ObjectMapper().writeValue(response.getOutputStream(), body);
     }

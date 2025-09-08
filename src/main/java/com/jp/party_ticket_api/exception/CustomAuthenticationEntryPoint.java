@@ -27,8 +27,11 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", LocalDateTime.now().toString());
         body.put("status", 401);
-        body.put("erro", "Não autorizado");
-        body.put("mensagem", "Token inválido ou expirado.");
+        if (authException instanceof UsuarioNaoEncontradoException) {
+            body.put("erro", authException.getMessage()); 
+        } else {
+            body.put("erro", "Token inválido ou expirado.");
+        }
 
         new ObjectMapper().writeValue(response.getOutputStream(), body);
     }
