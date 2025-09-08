@@ -61,5 +61,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(DataException.class)
+    public ResponseEntity<?> handleEmailInvalidoException(DataException ex) {
+        Map<String, Object> erro = new HashMap<>();
+        erro.put("timestamp", LocalDateTime.now());
+        erro.put("status", HttpStatus.BAD_REQUEST.value());
+        erro.put("erro", ex.getMessage());
+
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
    
 }

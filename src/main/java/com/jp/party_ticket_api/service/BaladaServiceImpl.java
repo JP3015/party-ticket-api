@@ -11,6 +11,7 @@ import com.jp.party_ticket_api.repository.BaladaRepository;
 import com.jp.party_ticket_api.repository.CompraRepository;
 import com.jp.party_ticket_api.service.interfaces.IBaladaService;
 import com.jp.party_ticket_api.validator.CapacidadeValidator;
+import com.jp.party_ticket_api.validator.DataValidator;
 
 @Service
 public class BaladaServiceImpl implements IBaladaService{
@@ -18,11 +19,14 @@ public class BaladaServiceImpl implements IBaladaService{
 	private final BaladaRepository baladaRepository;
 	private final CompraRepository compraRepository;
 	private final CapacidadeValidator capacidadeValidator; 
+	private final DataValidator dataValidator;
 	
-	public BaladaServiceImpl(BaladaRepository baladaRepository, CompraRepository compraRepository, CapacidadeValidator capacidadeValidator) {
+	public BaladaServiceImpl(BaladaRepository baladaRepository, CompraRepository compraRepository, 
+			CapacidadeValidator capacidadeValidator, DataValidator dataValidator) {
 		this.baladaRepository = baladaRepository;
 		this.compraRepository = compraRepository;
 		this.capacidadeValidator = capacidadeValidator;
+		this.dataValidator = dataValidator;
 	}
 	
 	@Override
@@ -48,6 +52,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	@Override
 	public void criarBalada(Balada balada) {
 		capacidadeValidator.validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
+		dataValidator.validarData(balada.getData());
 		
 		baladaRepository.save(balada);
 	}
@@ -55,6 +60,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	@Override
 	public void atualizarBalada(Long id, BaladaDTO balada) {
 		capacidadeValidator.validarCapacidade(balada.getCapacidade(), balada.getIngressosDisponiveis());
+		dataValidator.validarData(balada.getData());
 		
 		baladaRepository.updateBalada(id, balada.getNomeEvento(), balada.getData(), balada.getLocal(), balada.getCapacidade(), balada.getIngressosDisponiveis());
 	}
@@ -71,7 +77,7 @@ public class BaladaServiceImpl implements IBaladaService{
 	
 	@Override
 	public void deletarBalada(Long id) {
-		compraRepository.deleteByIdBalada(id);;
+		compraRepository.deleteByIdBalada(id);
 		baladaRepository.deleteById(id);
 	}
 

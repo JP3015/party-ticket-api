@@ -10,16 +10,19 @@ import com.jp.party_ticket_api.dto.AniversarioDTO;
 import com.jp.party_ticket_api.repository.AniversarioRepository;
 import com.jp.party_ticket_api.repository.ConvidadoRepository;
 import com.jp.party_ticket_api.service.interfaces.IAniversarioService;
+import com.jp.party_ticket_api.validator.DataValidator;
 
 @Service
 public class AniversarioServiceImpl implements IAniversarioService{
 	
-	private AniversarioRepository aniversarioRepository;
-	private ConvidadoRepository convidadoRepository;
+	private final AniversarioRepository aniversarioRepository;
+	private final ConvidadoRepository convidadoRepository;
+	private final DataValidator dataValidator;
 	
-	public AniversarioServiceImpl(AniversarioRepository aniversarioRepository, ConvidadoRepository convidadoRepository) {
+	public AniversarioServiceImpl(AniversarioRepository aniversarioRepository, ConvidadoRepository convidadoRepository, DataValidator dataValidator) {
 		this.aniversarioRepository = aniversarioRepository;
 		this.convidadoRepository = convidadoRepository;
+		this.dataValidator = dataValidator;
 	}
 	
 	@Override
@@ -49,11 +52,15 @@ public class AniversarioServiceImpl implements IAniversarioService{
 
 	@Override
 	public void criarAniversario(Aniversario aniversario) {
+		dataValidator.validarData(aniversario.getData());
+		
 		aniversarioRepository.save(aniversario);
 	}
 
 	@Override
 	public void atualizarAniversario(Long id, AniversarioDTO aniversario) {
+		dataValidator.validarData(aniversario.getData());
+		
 		aniversarioRepository.updateAniversario(id, aniversario.getNomeEvento(), aniversario.getData(), aniversario.getLocal(), aniversario.getNomeAniversariante(), 
 				aniversario.getIdadeAniversariante(), aniversario.getCapacidade());
 	}
